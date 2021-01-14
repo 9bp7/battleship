@@ -1,8 +1,21 @@
+html {
+  font-size: 62.5%;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background-image: url('./assets/sea.jpg');
+  background-size: cover;
+
+  color: rgb(29, 29, 29);
+}
+
+html,
+body,
+button,
+input {
+  font-family: 'VT323', monospace;
 }
