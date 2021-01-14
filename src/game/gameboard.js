@@ -10,9 +10,9 @@ const Tile = () => {
     return hit;
   }
 
-  const setOccupied = (isOccupied, ship) => {
+  const setOccupied = (isOccupied, shipIndex) => {
     occupied = isOccupied;
-    occupyingShip = ship;
+    occupyingShip = shipIndex;
   };
   const isOccupied = () => {
     return occupied;
@@ -32,6 +32,7 @@ const Gameboard = (size) => {
       board[x][y] = Tile();
     }
   }
+  let allShips = [];
 
   const positionIsOutOfBounds = (startPos, length) => {
     if((startPos + length) > size) {
@@ -57,30 +58,37 @@ const Gameboard = (size) => {
     return false;
   }
 
-  const placeShip = (x, y, axis, length) => {
-    // Ensure that desired position is not out of bounds or taken already
+  const positionIsLegal = (x, y, axis, length) => {
     if(positionIsOutOfBounds(
       (axis === 'x' ? x : y),
       length
     ) || positionIsAlreadyTaken(x, y, axis, length)) {
       return false;
     }
+    return true;
+  }
 
-    // If safe, proceed to placing the ship
-    // First get the tiles occupied by the ship so we can create a Ship()
+  const placeShip = (x, y, axis, length) => {
+    // Ensure that desired position is not out of bounds or taken already
+    if(!positionIsLegal(x, y, axis, length)) {
+      return false;
+    }
+
+    // If safe to place
+    // Firstly, create a new Ship() and add to allShips[]
     let startPos = (axis === 'x' ? x : y);
     let tilesOccupiedByShip = [];
     for(let i = startPos; i < (startPos + length); i++) {
       tilesOccupiedByShip.push(i);
     }
-    let shipToBePlaced = Ship(tilesOccupiedByShip);
+    let shipToBePlaced = Ship(tilesOccupiedByShip, axis);
+    allShips.push(shipToBePlaced);
 
-    if(axis === 'x') {
-      for(let i = x; i < (x + length); i++) {
+    // Then set the relevant board tiles to be occupied with the Ship()
+    for(let i = startPos; i < (startPos + length); i++) {
+      if(axis === 'x') {
         board[i][y].setOccupied(true, shipToBePlaced);
-      }
-    } else if(axis === 'y') {
-      for(let i = y; i < (y + length); i++) {
+      } else if(axis === 'y') {
         board[x][i].setOccupied(true, shipToBePlaced);
       }
     }
@@ -88,7 +96,38 @@ const Gameboard = (size) => {
     return true;
   }
 
-  return { placeShip }
+  const receiveAttack = (x, y) => {
+    if(board[x][y].isHit()) {
+      return 'invalid';
+    } else {
+      board[x][y].setHit(true);
+
+      if(board[x][y].isOccupied()) {
+        board[x][y].getOccupyingShip().hit({
+          x,
+          y,
+        })
+        return 'hit';
+      } else {
+        return 'miss';
+      }
+    }
+  }
+
+  const allShipsSunk = () => {
+    for(let i = 0; i < allShips.length; i++) {
+      if(!allShips[i].isSunk()) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  const getBoard = () => {
+    return board;
+  }
+
+  return { placeShip, receiveAttack, getBoard, allShipsSunk, positionIsLegal }
 }
 
 export { Gameboard };

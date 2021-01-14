@@ -1,4 +1,4 @@
-const Ship = (position) => {
+const Ship = (position, axis) => {
   const shipLength = position.length;
 
   // From the length, create an array to keep track of hits
@@ -24,7 +24,7 @@ const Ship = (position) => {
     // Find position in hits[], return true if hit has not already been registered
     // Else return false 
     for(let i = 0; i < shipLength; i++) {
-      if(hits[i].position === hitPosition) {
+      if(hits[i].position === hitPosition[axis]) {
         if(hits[i].hit === false) {
           hits[i].hit = true;
           return true;
