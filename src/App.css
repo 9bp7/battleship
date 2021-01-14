@@ -6,15 +6,26 @@
   margin: 0 auto;
 }
 
-h1 {
+h1, h2, h3, h4, h5, h6 {
   font-family: 'Black Ops One', serif;
+}
+
+h1 {
   font-size: 5.0rem;
+}
+
+h2 {
+  font-size: 3.0rem;
 }
 
 p,
 button,
 input {
   font-size: 2.0rem;
+}
+
+p.smaller-p {
+  font-size: 1.6rem;
 }
 
 input,
@@ -46,13 +57,29 @@ input[type="submit"] {
   text-align: center;
 }
 
-.App h1 {
+.App h1,
+.App h2 {
   text-transform: uppercase;
   text-shadow: 0 0 15px #5d6aa299;
   color: rgb(0, 21, 65);
   margin: 60px 0 80px 0;
 }
 
+.App h2 {
+  margin-bottom: 40px;
+}
+
 .App p {
   margin-bottom: 20px;
+}
+
+.fade-out {
+  transition: 1s;
+  opacity: 0;
+}
+
+div.half {
+  width: 50%;
+  padding: 0 10px;
+  display: inline-block;
 }

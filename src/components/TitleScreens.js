@@ -26,13 +26,31 @@ function ChooseOpponentScreen(props) {
 }
 
 function SetNameScreen(props) {
+  let [classNames, setClassNames] = useState('');
+  let [nameValue, setNameValue] = useState('');
+
+  function setScreen(e) {
+    e.preventDefault();
+    if(classNames !== 'fade-out') {
+      props.setName(1, nameValue);
+      setClassNames('fade-out');
+      setTimeout(() => {
+        props.setScreen(3);
+      }, 1500);
+    }    
+  }
+
+  function handleChange(e) {
+    setNameValue(e.target.value);
+  }
+
   return(
     <>
       <h1>Battleship</h1>
-      <div>
+      <div className={classNames}>
         <p>And what shall we call you, Commander?</p>
-        <form onSubmit={() => props.setScreen(3)}>
-          <input type="text" placeholder="Your name"/>
+        <form onSubmit={e => setScreen(e)}>
+          <input type="text" placeholder="Your name" onChange={e => handleChange(e)} value={nameValue}/>
           <input type="submit" value="Play" />
         </form>
       </div>
