@@ -83,9 +83,54 @@ const ComputerPlayer = (name, boardSize) => {
     }
   }
 
+  function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
+
   const makeCalculatedAttack = (gameboardToAttack) => {
     console.log('Attempting calculated attack...');
-    if(gameboardToAttack.canReceiveAttack(lastSuccessfulX + 1, lastSuccessfulY)) {
+    let coordsToTry = shuffle([
+      {x: lastSuccessfulX + 1, y: lastSuccessfulY},
+      {x: lastSuccessfulX - 1, y: lastSuccessfulY},
+      {x: lastSuccessfulX, y: lastSuccessfulY + 1},
+      {x: lastSuccessfulX, y: lastSuccessfulY - 1},
+    ]);
+
+    for(let i = 0; i < coordsToTry.length; i++) {
+      if(gameboardToAttack.canReceiveAttack(coordsToTry[i].x, coordsToTry[i].y)) {
+        gameboardToAttack.receiveAttack(coordsToTry[i].x, coordsToTry[i].y);
+        if(gameboardToAttack.getTile(coordsToTry[i].x, coordsToTry[i].y).isOccupied()) {
+          lastSuccessfulX = coordsToTry[i].x;
+          lastSuccessfulY = coordsToTry[i].y;
+        }
+
+        return {
+          x: lastSuccessfulX,
+          y: lastSuccessfulY
+        };
+      }
+    }
+    
+    lastSuccessfulX = null;
+    lastSuccessfulY = null;
+    return makeRandomAttack(gameboardToAttack);
+
+    /*if(gameboardToAttack.canReceiveAttack(lastSuccessfulX + 1, lastSuccessfulY)) {
       console.log('Trying lastScuessfuklX+1...');
       gameboardToAttack.receiveAttack(lastSuccessfulX + 1, lastSuccessfulY);
       if(gameboardToAttack.getTile(lastSuccessfulX + 1, lastSuccessfulY).isOccupied()) {
@@ -133,7 +178,7 @@ const ComputerPlayer = (name, boardSize) => {
       lastSuccessfulX = null;
       lastSuccessfulY = null;
       return makeRandomAttack(gameboardToAttack);
-    }
+    }*/
   }
 
   const attackGameboard = (gameboardToAttack) => {
