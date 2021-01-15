@@ -26,13 +26,17 @@ const Tile = () => {
 
 const Gameboard = (size) => {
   let board = [];
-  for(let x = 0; x < size; x++) {
-    board[x] = [];
-    for(let y = 0; y < size; y++) {
-      board[x][y] = Tile();
+  for(let y = 0; y < size; y++) {
+    board[y] = [];
+    for(let x = 0; x < size; x++) {
+      board[y][x] = Tile();
     }
   }
   let allShips = [];
+
+  const getBoardSize = () => size;
+
+  const getTile = (x, y) => board[x][y];
 
   const positionIsOutOfBounds = (startPos, length) => {
     if((startPos + length) > size) {
@@ -68,7 +72,7 @@ const Gameboard = (size) => {
     return true;
   }
 
-  const placeShip = (x, y, axis, length) => {
+  const placeShip = (x, y, axis, length, name = '') => {
     // Ensure that desired position is not out of bounds or taken already
     if(!positionIsLegal(x, y, axis, length)) {
       return false;
@@ -81,7 +85,7 @@ const Gameboard = (size) => {
     for(let i = startPos; i < (startPos + length); i++) {
       tilesOccupiedByShip.push(i);
     }
-    let shipToBePlaced = Ship(tilesOccupiedByShip, axis);
+    let shipToBePlaced = Ship(tilesOccupiedByShip, axis, name);
     allShips.push(shipToBePlaced);
 
     // Then set the relevant board tiles to be occupied with the Ship()
@@ -127,7 +131,7 @@ const Gameboard = (size) => {
     return board;
   }
 
-  return { placeShip, receiveAttack, getBoard, allShipsSunk, positionIsLegal }
+  return { placeShip, receiveAttack, getBoard, getBoardSize, getTile, allShipsSunk, positionIsLegal }
 }
 
 export { Gameboard };

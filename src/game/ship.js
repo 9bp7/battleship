@@ -1,4 +1,4 @@
-const Ship = (position, axis) => {
+const Ship = (position, axis, name = '') => {
   const shipLength = position.length;
 
   // From the length, create an array to keep track of hits
@@ -35,7 +35,13 @@ const Ship = (position, axis) => {
     }
   }
 
-  return { hit, isSunk };
+  const getName = () => {
+    if(name) {
+      return name;
+    }
+  }
+
+  return { hit, isSunk, getName };
 }
 
 export { Ship };

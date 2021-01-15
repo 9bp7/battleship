@@ -11,7 +11,7 @@ const Player = (name, boardSize) => {
     return gameboard;
   }
 
-  return { getName, getGameboard };
+  return { getName, getGameboard};
 }
 
 const HumanPlayer = (name, boardSize) => {
