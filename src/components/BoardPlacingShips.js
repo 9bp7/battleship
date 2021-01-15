@@ -41,12 +41,6 @@ function BoardPlacingShips(props) {
                                         isOccupied={tileIsOccupied} 
                                         x={x} 
                                         y={y} />
-
-          /*filledBoard[y][x] = <BoardTile onClick={() => placeShip(x, y)} onMouseOver={redrawBoard} 
-                                  isOccupied x={x} y={y} />
-        } else {
-          filledBoard[y][x] = <BoardTile onClick={() => placeShip(x, y)} onMouseOver={redrawBoard} x={x} y={y}/>
-        }*/
       }
     }
 
