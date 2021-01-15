@@ -1,15 +1,48 @@
-import React, {useState} from 'react';
-import Board from './Board';
+import React, {useState, useEffect} from 'react';
+import BoardPlacingShips from './BoardPlacingShips';
 
 function BoatPlacing(props) {
+  let [boatsToPlace, setBoatsToPlace] = useState();
+  let [currentBoat, setCurrentBoat] = useState(0);
+  let [axis, setAxis] = useState('y');
+
+  useEffect(() => {
+    let boats = [{name: 'Carrier', length: 5},
+    {name: 'Battleship', length: 4},
+    {name: 'Destroyer', length: 3},
+    {name: 'Submarine', length: 3},
+    {name: 'Patrol Boat', length: 2}];
+    setBoatsToPlace([...boats]);
+  }, []);
+
+  function placeShip(x, y) {
+    if(currentBoat < boatsToPlace.length) {
+      if(props.gameboard.positionIsLegal()) {
+        if((currentBoat + 1) < boatsToPlace.length) {
+          setCurrentBoat(currentBoat + 1);  
+        } else {
+          props.setScreen();
+        }               
+      }      
+    }
+  }
+
   return(
     <>
       <div>
         <p className="smaller-p">{props.text}</p>
-        <p className="smaller-p">Currently Placing: </p>
-        <Board gameboard={props.gameboard}
-               placingShipLength={5}
-               placingShipAxis='x' />
+        { boatsToPlace !== undefined
+        ? <>
+            <p className="smaller-p">Currently Placing: {boatsToPlace[currentBoat].name}</p>
+            <BoardPlacingShips gameboard={props.gameboard}
+                placingShipLength={boatsToPlace[currentBoat].length}
+                placingShipAxis={axis} 
+                shipName={boatsToPlace[currentBoat].name}
+                placeShipFunc={placeShip}
+                changeAxisFunc={() => axis === 'x' ? setAxis('y') : setAxis('x')}
+                />
+          </>
+        : <p>Setting up board...</p>}
       </div>
     </>
   )

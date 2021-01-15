@@ -25,7 +25,7 @@ function App() {
 
   switch(currentScreen) {
     case 0:
-      toDisplay = <SplashText textToShow="Welcome to Battleship. Ready to go?"
+      toDisplay = <SplashText textToShow="Welcome to Battleship. Ready to start?"
                               btn1Text="Begin Mission"
                               btn1Func={() => setScreen(1)} />
       break;
