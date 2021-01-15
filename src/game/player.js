@@ -50,24 +50,22 @@ const ComputerPlayer = (name, boardSize) => {
     }
   }
 
-  const getNextCoords = (gameboardToAttack) => {
+  const attackGameboard = (gameboardToAttack) => {
     let coordsAreInvalid = true;
-    let coords = {};
     do {
-      coords.x = getRandomArbitrary(0, boardSize);
-      coords.y = getRandomArbitrary(0, boardSize);
-      if(gameboardToAttack.positionIsLegal(coords.x, coords.y)) {
+      let randomX = +(getRandomArbitrary(0, boardSize).toFixed(0));
+      let randomY = +(getRandomArbitrary(0, boardSize).toFixed(0));
+      if(gameboardToAttack.canReceiveAttack(randomX, randomY)) {
+        gameboardToAttack.receiveAttack(randomX, randomY);
         coordsAreInvalid = false;
       }
     } while(coordsAreInvalid);
-
-    return coords;
   }
 
   return Object.assign(
     {}, 
     prototype, 
-    { getNextCoords, fillGameboard }
+    { attackGameboard, fillGameboard }
   )
 }
 

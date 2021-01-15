@@ -13,12 +13,17 @@ function BoardPlayer(props) {
 
   useEffect(() => {
     redrawBoard();
-  }, [placed])
+  }, [placed, props.isEnabled])
 
   function processAttack(x, y) {
+    if(!props.isEnabled) {
+      return;
+    }
+
     if(props.gameboard.canReceiveAttack(x, y)) {
       setPlaced(placed + 1);
       props.gameboard.receiveAttack(x, y);
+      props.receiveAttack();
     }    
   }
 
@@ -36,7 +41,7 @@ function BoardPlayer(props) {
           tileIsHit = true;
         }
         let tileIsHovering = null;
-        if(dx === x && dy === y) {
+        if(dx === x && dy === y && props.isEnabled) {
           if(props.gameboard.canReceiveAttack(x, y)) {
             tileIsHovering = true;
           } else {

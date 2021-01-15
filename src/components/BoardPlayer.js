@@ -11,6 +11,10 @@ function BoardPlayer(props) {
     redrawBoard();
   }, [])
 
+  useEffect(() => {
+    redrawBoard();
+  }, [props.isEnabled])
+
   function redrawBoard(dx = 0, dy = 0) {
     let filledBoard = [];
     for(let y = 0; y < props.gameboard.getBoardSize(); y++) {
