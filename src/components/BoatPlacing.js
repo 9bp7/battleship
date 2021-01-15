@@ -7,11 +7,7 @@ function BoatPlacing(props) {
   let [axis, setAxis] = useState('y');
 
   useEffect(() => {
-    let boats = [{name: 'Carrier', length: 5},
-    {name: 'Battleship', length: 4},
-    {name: 'Destroyer', length: 3},
-    {name: 'Submarine', length: 3},
-    {name: 'Patrol Boat', length: 2}];
+    let boats = props.boats;
     setBoatsToPlace([...boats]);
   }, []);
 

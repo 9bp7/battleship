@@ -11,7 +11,7 @@ const Player = (name, boardSize) => {
     return gameboard;
   }
 
-  return { getName, getGameboard};
+  return { gameboard, getName, getGameboard};
 }
 
 const HumanPlayer = (name, boardSize) => {
@@ -31,6 +31,25 @@ const ComputerPlayer = (name, boardSize) => {
     return Math.random() * (max - min) + min;
   }  
 
+  const fillGameboard = (shipsToFillWith) => {
+    let i = 0;
+    while(i < shipsToFillWith.length) {
+      let axis = (getRandomArbitrary(0, 50) > 24 ? 'x' : 'y');
+      let randomX = +(getRandomArbitrary(0, boardSize).toFixed(0));
+      let randomY = +(getRandomArbitrary(0, boardSize).toFixed(0));
+      console.log(randomX +' '+ randomY+' '+axis);
+      if(prototype.gameboard.positionIsLegal(randomX, randomY, axis, shipsToFillWith[i].length)) {
+        console.log('position is legal');
+        prototype.gameboard.placeShip(randomX, randomY, axis, shipsToFillWith[i].length, shipsToFillWith[0].name);
+        i++;
+      }
+      /*if(prototype.gameboard.positionIsLegal(randomX, randomY, axis, shipsToFillWith[i].length)) {
+        prototype.gameboard.placeShip(randomX, randomY, axis, shipsToFillWith[i].length, shipsToFillWith[0].name);
+        i++;
+      }*/
+    }
+  }
+
   const getNextCoords = (gameboardToAttack) => {
     let coordsAreInvalid = true;
     let coords = {};
@@ -48,7 +67,7 @@ const ComputerPlayer = (name, boardSize) => {
   return Object.assign(
     {}, 
     prototype, 
-    { getNextCoords }
+    { getNextCoords, fillGameboard }
   )
 }
 

@@ -1,15 +1,27 @@
 import React, {useState} from 'react';
+import image from '../assets/nuclear-explosion.svg';
 
 function BoardTile(props) {
   let classes = (props.isOccupied ? "gameboard-tile-occupied" : "gameboard-tile");
-  classes = (props.isHoveringValid ? classes += " gameboard-tile-hover-valid" : classes);
-  classes = (props.isHoveringInvalid ? classes += " gameboard-tile-hover-invalid" : classes);
+  if(props.state === 'placing') {
+    if(props.isHoveringValid !== null) {
+      classes = (props.isHoveringValid ? classes += " gameboard-tile-hover-valid" : classes += " gameboard-tile-hover-invalid");
+    }
+  }
+  if(props.state === 'attacking') {
+    if(props.isHoveringValid !== null) {
+      classes = (props.isHoveringValid ? classes += " gameboard-tile-hover-valid" : classes += " gameboard-tile-hover-invalid");
+    }
+  }
+  let onClick = (props.onClick ? props.onClick : null);
+  let onMouseOver = (props.onMouseOver ? props.onMouseOver : null);
 
   return(
     <> 
       <div className={classes} 
-           onMouseOver={() => props.onMouseOver(props.x, props.y)}
-           onClick={() => props.onClick(props.x, props.y)}>         
+           onMouseOver={onMouseOver}
+           onClick={onClick}> 
+        {props.isHit ? <img src={image} className="hit" /> : null}        
       </div>
     </>
   )

@@ -27,8 +27,9 @@ function BoardPlacingShips(props) {
   
   function redrawBoard(x = 0, y = 0) {
     setCoords({x, y});
-
     let filledBoard = [];
+
+    // Firstly, draw the board and any occupied tiles
     for(let y = 0; y < props.gameboard.getBoardSize(); y++) {
       filledBoard[y] = [];
       for(let x = 0; x < props.gameboard.getBoardSize(); x++) { 
@@ -37,44 +38,39 @@ function BoardPlacingShips(props) {
           tileIsOccupied = true;
         }
         filledBoard[y][x] = <BoardTile  onClick={() => placeShip(x, y)} 
-                                        onMouseOver={redrawBoard} 
-                                        isOccupied={tileIsOccupied} 
+                                        onMouseOver={() => redrawBoard(x, y)} 
                                         x={x} 
-                                        y={y} />
+                                        y={y}
+                                        isOccupied={tileIsOccupied}
+                                        isHoveringValid={null}
+                                        state={"placing"} />
       }
     }
 
-
-    for(let y = 0; y < props.gameboard.getBoardSize(); y++) {
-      filledBoard[y] = [];
-      for(let x = 0; x < props.gameboard.getBoardSize(); x++) { 
-        if(props.gameboard.getTile(x, y).isOccupied()) {
-          filledBoard[y][x] = <BoardTile onClick={() => placeShip(x, y)} onMouseOver={redrawBoard} 
-                                  isOccupied x={x} y={y} />
-        } else {
-          filledBoard[y][x] = <BoardTile onClick={() => placeShip(x, y)} onMouseOver={redrawBoard} x={x} y={y}/>
-        }
-      }
-    }
-
-    if(props.placingShipAxis === 'x') {
-      for(let i = x; i < (x + props.placingShipLength); i++) {
-        if((x + props.placingShipLength) <= props.gameboard.getBoardSize()) {
-          if(props.gameboard.positionIsLegal(x, y, props.placingShipAxis, props.placingShipLength)) {
-            filledBoard[y][i] = <BoardTile onClick={() => placeShip(x, y)} onMouseOver={redrawBoard} x={i} y={y} isOccupied={props.gameboard.getTile(i, y).isOccupied()} isHoveringValid />
-          } else {
-            filledBoard[y][i] = <BoardTile onClick={() => placeShip(x, y)} onMouseOver={redrawBoard} x={i} y={y} isOccupied={props.gameboard.getTile(i, y).isOccupied()} isHoveringInvalid />
-          }
-        }
-      }
-    } else if(props.placingShipAxis === 'y') {
-      for(let i = y; i < (y + props.placingShipLength); i++) {
-        if((y + props.placingShipLength) <= props.gameboard.getBoardSize()) {
-          if(props.gameboard.positionIsLegal(x, y, props.placingShipAxis, props.placingShipLength)) {
-            filledBoard[i][x] = <BoardTile onClick={() => placeShip(x, y)} onMouseOver={redrawBoard} x={x} y={i} isOccupied={props.gameboard.getTile(x, i).isOccupied()} isHoveringValid />
-          } else {
-            filledBoard[i][x] = <BoardTile onClick={() => placeShip(x, y)} onMouseOver={redrawBoard} x={x} y={i} isOccupied={props.gameboard.getTile(x, i).isOccupied()} isHoveringInvalid />
-          }
+    // Then, draw the current location of where the boat will be placed
+    // Set flags depending on whether the position is legal or not
+    let startPos = (props.placingShipAxis === 'x' ? x : y);
+    for(let i = startPos; i < (startPos + props.placingShipLength); i++) {
+      if((startPos + props.placingShipLength) <= props.gameboard.getBoardSize()) {
+        let isTilePositionValid = ( props.gameboard.positionIsLegal(x, y, props.placingShipAxis, props.placingShipLength)
+                                    ? true
+                                    : false);
+        if(props.placingShipAxis === 'x') {
+          filledBoard[y][i] = <BoardTile  onClick={() => placeShip(x, y)} 
+                                          onMouseOver={() => redrawBoard(x, y)} 
+                                          x={i} 
+                                          y={y} 
+                                          isOccupied={props.gameboard.getTile(i, y).isOccupied()} 
+                                          isHoveringValid={isTilePositionValid}
+                                          state={"placing"} />
+        } else if(props.placingShipAxis === 'y') {
+          filledBoard[i][x] = <BoardTile  onClick={() => placeShip(x, y)} 
+                                          onMouseOver={() => redrawBoard(x, y)} 
+                                          x={x} 
+                                          y={i} 
+                                          isOccupied={props.gameboard.getTile(x, i).isOccupied()} 
+                                          isHoveringValid={isTilePositionValid}
+                                          state={"placing"} />
         }
       }
     }

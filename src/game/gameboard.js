@@ -66,7 +66,9 @@ const Gameboard = (size) => {
     if(positionIsOutOfBounds(
       (axis === 'x' ? x : y),
       length
-    ) || positionIsAlreadyTaken(x, y, axis, length)) {
+    )) {
+      return false;
+    } else if(positionIsAlreadyTaken(x, y, axis, length)) {
       return false;
     }
     return true;
