@@ -38,10 +38,14 @@ const ComputerPlayer = (name, boardSize) => {
       let randomX = +(getRandomArbitrary(0, boardSize).toFixed(0));
       let randomY = +(getRandomArbitrary(0, boardSize).toFixed(0));
       console.log(randomX +' '+ randomY+' '+axis);
-      if(prototype.gameboard.positionIsLegal(randomX, randomY, axis, shipsToFillWith[i].length)) {
-        console.log('position is legal');
-        prototype.gameboard.placeShip(randomX, randomY, axis, shipsToFillWith[i].length, shipsToFillWith[0].name);
-        i++;
+      try {
+        if(prototype.gameboard.positionIsLegal(randomX, randomY, axis, shipsToFillWith[i].length)) {
+          console.log('position is legal');
+          prototype.gameboard.placeShip(randomX, randomY, axis, shipsToFillWith[i].length, shipsToFillWith[i].name);
+          i++;
+        }
+      } catch {
+
       }
       /*if(prototype.gameboard.positionIsLegal(randomX, randomY, axis, shipsToFillWith[i].length)) {
         prototype.gameboard.placeShip(randomX, randomY, axis, shipsToFillWith[i].length, shipsToFillWith[0].name);
@@ -52,14 +56,23 @@ const ComputerPlayer = (name, boardSize) => {
 
   const attackGameboard = (gameboardToAttack) => {
     let coordsAreInvalid = true;
+    let randomX = 0;
+    let randomY = 0;
     do {
-      let randomX = +(getRandomArbitrary(0, boardSize).toFixed(0));
-      let randomY = +(getRandomArbitrary(0, boardSize).toFixed(0));
-      if(gameboardToAttack.canReceiveAttack(randomX, randomY)) {
-        gameboardToAttack.receiveAttack(randomX, randomY);
-        coordsAreInvalid = false;
+      randomX = +(getRandomArbitrary(0, boardSize).toFixed(0));
+      randomY = +(getRandomArbitrary(0, boardSize).toFixed(0));
+      try {
+        if(gameboardToAttack.canReceiveAttack(randomX, randomY)) {
+          gameboardToAttack.receiveAttack(randomX, randomY);
+          coordsAreInvalid = false;
+        }
+      } catch {
+        
       }
+      
     } while(coordsAreInvalid);
+
+    return {x: randomX, y: randomY};
   }
 
   return Object.assign(

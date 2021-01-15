@@ -23,7 +23,7 @@ function BoardPlayer(props) {
     if(props.gameboard.canReceiveAttack(x, y)) {
       setPlaced(placed + 1);
       props.gameboard.receiveAttack(x, y);
-      props.receiveAttack();
+      props.receiveAttack(x, y);
     }    
   }
 

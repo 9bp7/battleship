@@ -6,7 +6,7 @@
   margin: 0 auto;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h4, h5, h6 {
   font-family: 'Black Ops One', serif;
 }
 
@@ -84,10 +84,18 @@ input[type="submit"] {
   opacity: 0;
 }
 
-div.half {
-  width: 50%;
+div.forty {
+  width: 40%;
   padding: 0 10px;
   display: inline-block;
+}
+
+div.twenty {
+  width: 20%;
+  padding: 0 10px;
+  display: inline-block;
+  vertical-align: top;
+  font-size: 1.2rem;
 }
 
 .white {
