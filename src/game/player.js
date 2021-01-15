@@ -28,7 +28,8 @@ const ComputerPlayer = (name, boardSize) => {
   const prototype = Player(name, boardSize);
   let lastSuccessfulX = null;
   let lastSuccessfulY = null;
-  let successDirection = null;
+
+  let successfulCoordinates = [];
 
   const getRandomArbitrary = (min, max) => {
     return Math.random() * (max - min) + min;
@@ -53,36 +54,6 @@ const ComputerPlayer = (name, boardSize) => {
     }
   }
 
-  const makeRandomAttack = (gameboardToAttack) => {
-    console.log('Attempting random attack...');
-
-    let coordsAreInvalid = true;
-    let randomX = 0;
-    let randomY = 0;
-    do {
-      randomX = +(getRandomArbitrary(0, boardSize).toFixed(0));
-      randomY = +(getRandomArbitrary(0, boardSize).toFixed(0));
-      try {
-        if(gameboardToAttack.canReceiveAttack(randomX, randomY)) {
-          gameboardToAttack.receiveAttack(randomX, randomY);
-          if(gameboardToAttack.getTile(randomX, randomY).isOccupied()) {
-            lastSuccessfulX = randomX;
-            lastSuccessfulY = randomY;
-          }
-          coordsAreInvalid = false;
-        }
-      } catch {
-        
-      }
-      
-    } while(coordsAreInvalid);
-
-    return {
-      x: randomX,
-      y: randomY
-    }
-  }
-
   function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
   
@@ -102,88 +73,71 @@ const ComputerPlayer = (name, boardSize) => {
     return array;
   }
 
+  const makeRandomAttack = (gameboardToAttack) => {
+    console.log('Attempting random attack...');
+
+    let coordsAreInvalid = true;
+    let randomX = 0;
+    let randomY = 0;
+    do {
+      randomX = +(getRandomArbitrary(0, boardSize).toFixed(0));
+      randomY = +(getRandomArbitrary(0, boardSize).toFixed(0));
+      try {
+        if(gameboardToAttack.canReceiveAttack(randomX, randomY)) {
+          gameboardToAttack.receiveAttack(randomX, randomY);
+          if(gameboardToAttack.getTile(randomX, randomY).isOccupied()) {
+            lastSuccessfulX = randomX;
+            lastSuccessfulY = randomY;
+            successfulCoordinates.push({x: randomX, y: randomY});
+          }
+          coordsAreInvalid = false;
+        }
+      } catch {
+        
+      }
+      
+    } while(coordsAreInvalid);
+
+    return {
+      x: randomX,
+      y: randomY
+    }
+  }
+
   const makeCalculatedAttack = (gameboardToAttack) => {
     console.log('Attempting calculated attack...');
-    let coordsToTry = shuffle([
-      {x: lastSuccessfulX + 1, y: lastSuccessfulY},
-      {x: lastSuccessfulX - 1, y: lastSuccessfulY},
-      {x: lastSuccessfulX, y: lastSuccessfulY + 1},
-      {x: lastSuccessfulX, y: lastSuccessfulY - 1},
-    ]);
 
-    for(let i = 0; i < coordsToTry.length; i++) {
-      if(gameboardToAttack.canReceiveAttack(coordsToTry[i].x, coordsToTry[i].y)) {
-        gameboardToAttack.receiveAttack(coordsToTry[i].x, coordsToTry[i].y);
-        if(gameboardToAttack.getTile(coordsToTry[i].x, coordsToTry[i].y).isOccupied()) {
-          lastSuccessfulX = coordsToTry[i].x;
-          lastSuccessfulY = coordsToTry[i].y;
+    for(let j = 0; j < successfulCoordinates.length; j++) {
+      let coordsToTry = shuffle([
+        {x: successfulCoordinates[j].x + 1, y: successfulCoordinates[j].y    },
+        {x: successfulCoordinates[j].x - 1, y: successfulCoordinates[j].y    },
+        {x: successfulCoordinates[j].x,     y: successfulCoordinates[j].y + 1},
+        {x: successfulCoordinates[j].x,     y: successfulCoordinates[j].y - 1},
+      ]);
+
+      for(let i = 0; i < coordsToTry.length; i++) {
+        if(gameboardToAttack.canReceiveAttack(coordsToTry[i].x, coordsToTry[i].y)) {
+          gameboardToAttack.receiveAttack(coordsToTry[i].x, coordsToTry[i].y);
+          if(gameboardToAttack.getTile(coordsToTry[i].x, coordsToTry[i].y).isOccupied()) {
+            lastSuccessfulX = coordsToTry[i].x;
+            lastSuccessfulY = coordsToTry[i].y;
+            successfulCoordinates.push({x: coordsToTry[i].x, y: coordsToTry[i].y});
+          }
+  
+          return {
+            x: lastSuccessfulX,
+            y: lastSuccessfulY
+          };
         }
-
-        return {
-          x: lastSuccessfulX,
-          y: lastSuccessfulY
-        };
       }
     }
     
-    lastSuccessfulX = null;
-    lastSuccessfulY = null;
     return makeRandomAttack(gameboardToAttack);
-
-    /*if(gameboardToAttack.canReceiveAttack(lastSuccessfulX + 1, lastSuccessfulY)) {
-      console.log('Trying lastScuessfuklX+1...');
-      gameboardToAttack.receiveAttack(lastSuccessfulX + 1, lastSuccessfulY);
-      if(gameboardToAttack.getTile(lastSuccessfulX + 1, lastSuccessfulY).isOccupied()) {
-        lastSuccessfulX = lastSuccessfulX + 1;
-        lastSuccessfulY = lastSuccessfulY;
-      }
-      return {
-        x: lastSuccessfulX,
-        y: lastSuccessfulY
-      };
-    } else if(gameboardToAttack.canReceiveAttack(lastSuccessfulX - 1, lastSuccessfulY)) {
-      console.log('Trying lastScuessfuklX-1...');
-      gameboardToAttack.receiveAttack(lastSuccessfulX - 1, lastSuccessfulY);
-      if(gameboardToAttack.getTile(lastSuccessfulX - 1, lastSuccessfulY).isOccupied()) {
-        lastSuccessfulX = lastSuccessfulX - 1;
-        lastSuccessfulY = lastSuccessfulY;
-      }
-      return {
-        x: lastSuccessfulX,
-        y: lastSuccessfulY
-      };
-    } else if(gameboardToAttack.canReceiveAttack(lastSuccessfulX, lastSuccessfulY + 1)) {
-      console.log('Trying lastScuessfuklY+1...');
-      gameboardToAttack.receiveAttack(lastSuccessfulX, lastSuccessfulY + 1);
-      if(gameboardToAttack.getTile(lastSuccessfulX, lastSuccessfulY + 1).isOccupied()) {
-        lastSuccessfulX = lastSuccessfulX;
-        lastSuccessfulY = lastSuccessfulY + 1;
-      }
-      return {
-        x: lastSuccessfulX,
-        y: lastSuccessfulY
-      };
-    } else if(gameboardToAttack.canReceiveAttack(lastSuccessfulX, lastSuccessfulY - 1)) {
-      console.log('Trying lastScuessfuklY-1...');
-      gameboardToAttack.receiveAttack(lastSuccessfulX, lastSuccessfulY - 1);
-      if(gameboardToAttack.getTile(lastSuccessfulX, lastSuccessfulY - 1).isOccupied()) {
-        lastSuccessfulX = lastSuccessfulX;
-        lastSuccessfulY = lastSuccessfulY - 1;
-      }
-      return {
-        x: lastSuccessfulX,
-        y: lastSuccessfulY
-      };
-    } else {
-      lastSuccessfulX = null;
-      lastSuccessfulY = null;
-      return makeRandomAttack(gameboardToAttack);
-    }*/
   }
 
   const attackGameboard = (gameboardToAttack) => {
     let coords = {};
-    if(lastSuccessfulX !== null && lastSuccessfulY !== null) {
+    if(successfulCoordinates.length > 0) {
       coords = makeCalculatedAttack(gameboardToAttack);      
     } else {
       coords = makeRandomAttack(gameboardToAttack);
