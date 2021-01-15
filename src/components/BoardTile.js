@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import image from '../assets/nuclear-explosion.svg';
+import explosion from '../assets/nuclear-explosion.svg';
+import miss from '../assets/water-drop.svg';
 
 function BoardTile(props) {
   let classes = (props.isOccupied ? "gameboard-tile-occupied" : "gameboard-tile");
@@ -10,7 +11,7 @@ function BoardTile(props) {
   }
   if(props.state === 'attacking') {
     if(props.isHoveringValid !== null) {
-      classes = (props.isHoveringValid ? classes += " gameboard-tile-hover-valid" : classes += " gameboard-tile-hover-invalid");
+      classes = (props.isHoveringValid ? classes += " gameboard-tile-hover-attack-valid" : classes += " gameboard-tile-hover-attack-invalid");
     }
   }
   let onClick = (props.onClick ? props.onClick : null);
@@ -21,7 +22,8 @@ function BoardTile(props) {
       <div className={classes} 
            onMouseOver={onMouseOver}
            onClick={onClick}> 
-        {props.isHit ? <img src={image} className="hit" /> : null}        
+        {props.isHit && props.isOccupied ? <img src={explosion} className="hit" /> : null}        
+        {props.isHit && !props.isOccupied ? <img src={miss} className="miss" /> : null}        
       </div>
     </>
   )

@@ -34,6 +34,27 @@
   border: 2px solid rgb(136, 25, 31);
 }
 
+.gameboard-tile-hover-attack-valid {
+  border: 2px solid rgb(25, 136, 44);
+  animation: attackBorder 0.3s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes attackBorder {
+  0% {
+    border: 2px solid rgb(228, 155, 19);
+  }
+
+  100% {
+    border: 2px solid rgb(228, 68, 19);
+  }
+}
+
+.gameboard-tile-hover-attack-invalid {
+  border: 2px solid rgb(136, 25, 31);
+}
+
 .gameboard-placing-controls {
   position: absolute;
   top: 0;
@@ -41,12 +62,21 @@
   width: 100%;
 }
 
+.hit,
+.miss {
+  width: 80%;
+  height: 80%;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  opacity: 0.7;
+}
+
 .hit {
   background-color: rgba(255, 0, 0, 0.1);
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0.7;
+}
+
+.miss {
+  background-color: transparent;
+  opacity: 0.65;
 }

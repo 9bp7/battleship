@@ -120,6 +120,13 @@ const Gameboard = (size) => {
     }
   }
 
+  const canReceiveAttack = (x, y) => {
+    if(board[x][y].isHit()) {
+      return false;
+    }
+    return true;
+  }
+
   const allShipsSunk = () => {
     for(let i = 0; i < allShips.length; i++) {
       if(!allShips[i].isSunk()) {
@@ -133,7 +140,7 @@ const Gameboard = (size) => {
     return board;
   }
 
-  return { placeShip, receiveAttack, getBoard, getBoardSize, getTile, allShipsSunk, positionIsLegal }
+  return { placeShip, receiveAttack, canReceiveAttack, getBoard, getBoardSize, getTile, allShipsSunk, positionIsLegal }
 }
 
 export { Gameboard };

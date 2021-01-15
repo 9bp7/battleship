@@ -11,7 +11,7 @@ function BoardPlayer(props) {
     redrawBoard();
   }, [])
 
-  function redrawBoard(x = 0, y = 0) {
+  function redrawBoard(dx = 0, dy = 0) {
     let filledBoard = [];
     for(let y = 0; y < props.gameboard.getBoardSize(); y++) {
       filledBoard[y] = [];
@@ -24,10 +24,11 @@ function BoardPlayer(props) {
         if(props.gameboard.getTile(x, y).isHit()) {
           tileIsHit = true;
         }
-        filledBoard[y][x] = <BoardTile  x={x} 
+        
+        filledBoard[y][x] = <BoardTile  onHover={() => redrawBoard(x, y)}
+                                        x={x} 
                                         y={y}
                                         isOccupied={tileIsOccupied}
-                                        isHoveringValid={null}
                                         isHit={tileIsHit} />
       }
     }

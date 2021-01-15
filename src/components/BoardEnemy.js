@@ -11,7 +11,18 @@ function BoardPlayer(props) {
     redrawBoard();
   }, [])
 
-  function redrawBoard(x = 0, y = 0) {
+  useEffect(() => {
+    redrawBoard();
+  }, [placed])
+
+  function processAttack(x, y) {
+    if(props.gameboard.canReceiveAttack(x, y)) {
+      setPlaced(placed + 1);
+      props.gameboard.receiveAttack(x, y);
+    }    
+  }
+
+  function redrawBoard(dx = 0, dy = 0) {
     let filledBoard = [];
     for(let y = 0; y < props.gameboard.getBoardSize(); y++) {
       filledBoard[y] = [];
@@ -24,11 +35,22 @@ function BoardPlayer(props) {
         if(props.gameboard.getTile(x, y).isHit()) {
           tileIsHit = true;
         }
-        filledBoard[y][x] = <BoardTile  x={x} 
+        let tileIsHovering = null;
+        if(dx === x && dy === y) {
+          if(props.gameboard.canReceiveAttack(x, y)) {
+            tileIsHovering = true;
+          } else {
+            tileIsHovering = false;
+          }
+        }
+        filledBoard[y][x] = <BoardTile  onMouseOver={() => redrawBoard(x, y)}
+                                        onClick={() => processAttack(x, y)}
+                                        x={x} 
                                         y={y}
                                         isOccupied={tileIsOccupied}
-                                        isHoveringValid={null}
-                                        isHit={tileIsHit} />
+                                        isHoveringValid={tileIsHovering}
+                                        isHit={tileIsHit}
+                                        state="attacking" />
       }
     }
     setBoard([...filledBoard]);
