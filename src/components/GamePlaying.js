@@ -7,9 +7,13 @@ function GamePlaying(props) {
   let [isEnabled, setIsEnabled] = useState(true);
   let [text, setText] = useState([<p>{`Right, let's show these b*stards what we're made of. Good luck, and don't let us down, Commander ${props.playerOne.getName()}!`}</p>])
 
-  function addTextToLog(textToAdd) {
+  function addTextToLog(textToAdd, classes='', bigText = false) {
     let newTextLog = text;
-    newTextLog.unshift(<p>{textToAdd}</p>);
+    if(bigText) {
+      newTextLog.unshift(<h3 className={classes}>{textToAdd}</h3>);
+    } else {
+      newTextLog.unshift(<p className={classes}>{textToAdd}</p>);
+    }    
     setText(newTextLog);
   }
 
@@ -26,7 +30,7 @@ function GamePlaying(props) {
         }
 
         if(props.playerOne.getGameboard().allShipsSunk()) {
-          addTextToLog(`We lost the battle! The enemy has eliminated all of our ships! Noooooo`);
+          addTextToLog(`We lost the battle! The enemy has eliminated all of our ships! Noooooo`, 'game-log-loss', true);
           setIsEnabled(true);
           setIsEnabled(false);
         } else {
@@ -46,7 +50,7 @@ function GamePlaying(props) {
       addTextToLog(`We missed that shot, let's aim better next time.`);
     }
     if(props.playerTwo.getGameboard().allShipsSunk()) {
-      addTextToLog(`WE WON THE BATTLE! The enemy is defeated. Well done, Commander ${props.playerOne.getName()}!`);
+      addTextToLog(`WE WON THE BATTLE! The enemy is defeated. Well done, Commander ${props.playerOne.getName()}!`, 'game-log-win', true);
       setIsEnabled(true);
       setIsEnabled(false);
     } else {

@@ -121,6 +121,10 @@ const Gameboard = (size) => {
   }
 
   const canReceiveAttack = (x, y) => {
+    if(x < 0 || x >= size || y < 0 || y >= size) {
+      return false;
+    }
+    
     if(board[x][y].isHit()) {
       return false;
     }

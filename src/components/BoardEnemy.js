@@ -55,7 +55,8 @@ function BoardPlayer(props) {
                                         isOccupied={tileIsOccupied}
                                         isHoveringValid={tileIsHovering}
                                         isHit={tileIsHit}
-                                        state="attacking" />
+                                        state="attacking"
+                                        isEnemy={true} />
       }
     }
     setBoard([...filledBoard]);

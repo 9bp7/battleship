@@ -3,7 +3,12 @@ import explosion from '../assets/nuclear-explosion.svg';
 import miss from '../assets/water-drop.svg';
 
 function BoardTile(props) {
-  let classes = (props.isOccupied ? "gameboard-tile-occupied" : "gameboard-tile");
+  let classes = '';
+  if(props.isEnemy && !props.isHit) {
+    classes = "gameboard-tile";
+  } else {
+    classes = (props.isOccupied ? "gameboard-tile-occupied" : "gameboard-tile");
+  }
   if(props.state === 'placing') {
     if(props.isHoveringValid !== null) {
       classes = (props.isHoveringValid ? classes += " gameboard-tile-hover-valid" : classes += " gameboard-tile-hover-invalid");
