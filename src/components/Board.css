@@ -100,11 +100,11 @@
 }
 
 .game-log p:nth-of-type(3) {
-  opacity: 0.8;
+  opacity: 0.6;
 }
 
 .game-log p:nth-of-type(4) {
-  opacity: 0.6;
+  opacity: 0.4;
 }
 
 .game-log p:nth-of-type(5) {
