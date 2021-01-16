@@ -27,7 +27,11 @@ function BoardPlayer(props) {
     }    
   }
 
-  function redrawBoard(dx, dy) {
+  let [coords, setCoords] = useState({x: 0, y: 0});
+
+  function redrawBoard(dx = coords.x, dy = coords.y) {
+    setCoords({x: dx, y: dy});
+
     let filledBoard = [];
     for(let y = 0; y < props.gameboard.getBoardSize(); y++) {
       filledBoard[y] = [];
