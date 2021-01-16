@@ -1,0 +1,3 @@
+- Add 2-player mode
+- Add ability to restart after game has finished
+- Improve game log, shouldn't show every message in the DOM & maybe don't announce miss unless it's >= 3 in a row?

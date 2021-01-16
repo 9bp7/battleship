@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import BoardPlacingShips from './BoardPlacingShips';
+import BoardPlacingShips from './boards/BoardPlacingShips';
 
-function BoatPlacing(props) {
+function BoatPlacer(props) {
   let [boatsToPlace, setBoatsToPlace] = useState();
   let [currentBoat, setCurrentBoat] = useState(0);
   let [axis, setAxis] = useState('y');
@@ -25,7 +25,6 @@ function BoatPlacing(props) {
       } else if(axis === 'y') {
         setAxis('x');
       }
-      console.log('Space key up. Axis ' + axis);
       window.removeEventListener('keyup', handleSpaceKey);
       setEventListener(false);
     }  
@@ -71,4 +70,4 @@ function BoatPlacing(props) {
   )
 }
 
-export default BoatPlacing;
+export default BoatPlacer;

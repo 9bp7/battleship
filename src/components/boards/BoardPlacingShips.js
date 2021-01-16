@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import BoardTile from './BoardTile';
-import seaBoard from '../assets/sea-board.jpg';
 import './Board.css';
 
 function BoardPlacingShips(props) {
@@ -86,7 +85,7 @@ function BoardPlacingShips(props) {
         <div className="gameboard-placing-controls">
           <p className="coords">Axis: {props.placingShipAxis} Coords: {coords.x} {coords.y} </p>
           <button onClick={props.changeAxisFunc} onWheel={props.changeAxisFunc}>Change Axis</button>
-          <p className="smaller-p">Press Space to Change Axis</p>
+          <p className="smaller-p">Or press Space to Change Axis</p>
         </div>
         
          {board}

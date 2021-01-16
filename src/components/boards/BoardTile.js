@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import explosion from '../assets/nuclear-explosion.svg';
-import miss from '../assets/water-drop.svg';
+import explosion from '../../assets/nuclear-explosion.svg';
+import miss from '../../assets/water-drop.svg';
 
 function BoardTile(props) {
   let classes = '';

@@ -8,7 +8,7 @@
   opacity: 0.95;
   position: relative;
   background-image: linear-gradient(to top, rgba(66, 81, 124, .9), rgba(66, 81, 124, .9)),
-                    url('../assets/sea-board.jpg');
+                    url('../../assets/sea-board.jpg');
   background-size: cover;
   box-shadow: 0px 0px 20px -1px #00000063;
 }
@@ -107,6 +107,7 @@
 .game-log {
   height: 400px;
   overflow-y: hidden;
+  position: relative;
 }
 
 .game-log p {
@@ -190,6 +191,14 @@
   font-size: 2.0rem;
   text-decoration: underline;
   text-transform: uppercase;
+}
+
+button.play-again {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 

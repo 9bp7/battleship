@@ -1,9 +1,9 @@
 import './App.css';
 import './assets/sea.jpg'
 import React, {useState} from 'react';
-import SplashText from './components/SplashText';
-import SplashInput from './components/SplashInput';
-import GameDisplay from './components/GameDisplay';
+import SplashText from './components/splash/SplashText';
+import SplashInput from './components/splash/SplashInput';
+import GameDisplayRouter from './components/GameDisplayRouter';
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState(0);
@@ -55,9 +55,9 @@ function App() {
       break;
 
     case 4:
-      toDisplay = <GameDisplay opponent="ai"
-                               p1Name={playerOneName} 
-                               p2Name="Puter" />
+      toDisplay = <GameDisplayRouter opponent="ai"
+                                     p1Name={playerOneName} 
+                                     p2Name="Puter" />
       break;
   }
 
