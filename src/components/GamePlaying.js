@@ -58,7 +58,7 @@ function GamePlaying(props) {
       addTextToLog(`We missed that shot, let's aim better next time.`);
     }
     if(props.playerTwo.getGameboard().allShipsSunk()) {
-      addTextToLog(`WE WON THE BATTLE! We've sunk all of ${props.playerTwo.getName()}'s poxy ships! You made it look easy... Jolly good job, Commander ${props.playerOne.getName()}!`, 'game-log-win', true);
+      addTextToLog(`WE WON THE BATTLE! We've sunk all of poxy ${props.playerTwo.getName()}'s ships! You made it look easy... Jolly good job, Commander ${props.playerOne.getName()}!`, 'game-log-win', true);
       setIsEnabled(true);
       setIsEnabled(false);
     } else {

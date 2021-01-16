@@ -25,9 +25,10 @@ function BoardPlacingShips(props) {
   }
 
   let [coords, setCoords] = useState({x: 0, y: 0});
-  
-  function redrawBoard(x, y) {
+
+  function redrawBoard(x = coords.x, y = coords.y) {
     setCoords({x, y});
+    
     let filledBoard = [];
 
     // Firstly, draw the board and any occupied tiles
