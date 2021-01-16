@@ -5,6 +5,7 @@ X Add visual display of out of bounds on boat placing screen
 - Tidy up code 
 - Move Tile factory into its own file
 - Improve computer attack logic
+- Ensure that display looks good on a smaller screen
 
 Improving computer attack logic
 Current Downfalls
@@ -13,3 +14,7 @@ Current Downfalls
           If the direction was successful, store it in a variable to use next time
           If that direction is tried, without success, set the last successful direction to null
           Create a new array that shuffles but always puts the desired item (if not null), i.e. the one that matches the last successful direction, to the top so that it is tried first
+
+- Continues to shoot at surrounding tiles of ships that have already been destroyed
+- To fix: Get the coordinate of ships that have been sunk, and remove them from the successful coordinates list
+

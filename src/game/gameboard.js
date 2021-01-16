@@ -140,11 +140,25 @@ const Gameboard = (size) => {
     return true;
   }
 
+  const getAllSunkShipCoords = () => {
+    let coords = [];
+    for(let x = 0; x < size; x++) {
+      for(let y = 0; y < size; y++) {
+        if(board[x][y].isOccupied()) {
+          if(board[x][y].getOccupyingShip().isSunk()) {
+            coords.push({x: x, y: y});
+          }          
+        }        
+      }
+    }
+    return coords;
+  }
+
   const getBoard = () => {
     return board;
   }
 
-  return { placeShip, receiveAttack, canReceiveAttack, getBoard, getBoardSize, getTile, allShipsSunk, positionIsLegal }
+  return { placeShip, receiveAttack, canReceiveAttack, getAllSunkShipCoords, getBoard, getBoardSize, getTile, allShipsSunk, positionIsLegal }
 }
 
 export { Gameboard };

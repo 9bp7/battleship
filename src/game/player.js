@@ -73,7 +73,6 @@ const ComputerPlayer = (name, boardSize) => {
       let coordsToPrioritise = prioritisedCoords.filter(coords => coords.direction === directionToPrioritise);
       prioritisedCoords = prioritisedCoords.filter(coords => coords.direction !== directionToPrioritise);
       prioritisedCoords.unshift(coordsToPrioritise[0]);
-      console.log(prioritisedCoords);
     }    
     return prioritisedCoords;
   }
@@ -89,7 +88,7 @@ const ComputerPlayer = (name, boardSize) => {
         if(gameboardToAttack.canReceiveAttack(randomX, randomY)) {
           gameboardToAttack.receiveAttack(randomX, randomY);
           if(gameboardToAttack.getTile(randomX, randomY).isOccupied()) {
-            successfulCoordinates.push({x: randomX, y: randomY});
+            successfulCoordinates.unshift({x: randomX, y: randomY});
           }
           coordsAreInvalid = false;
         }
@@ -121,7 +120,7 @@ const ComputerPlayer = (name, boardSize) => {
         if(gameboardToAttack.canReceiveAttack(coordsToTry[i].x, coordsToTry[i].y)) {
           gameboardToAttack.receiveAttack(coordsToTry[i].x, coordsToTry[i].y);
           if(gameboardToAttack.getTile(coordsToTry[i].x, coordsToTry[i].y).isOccupied()) {
-            successfulCoordinates.push({x: coordsToTry[i].x, y: coordsToTry[i].y});
+            successfulCoordinates.unshift({x: coordsToTry[i].x, y: coordsToTry[i].y});
             lastSuccessfulDirection = coordsToTry[i].direction;
           } else {
             lastSuccessfulDirection = null;
@@ -139,6 +138,41 @@ const ComputerPlayer = (name, boardSize) => {
     return makeRandomAttack(gameboardToAttack);
   }
 
+  // Method deletes all coords pertaining to sunk ships from the successful coordinates list
+  const getPrunedSuccessfulCoords = (gameboardToAttack) => {
+    let coordsToPrune = gameboardToAttack.getAllSunkShipCoords();
+    let prunedSuccessfulCoords = [];
+
+    for(let i = 0; i < successfulCoordinates.length; i++) {
+      let canAdd = true;
+
+      // Check if any previously successful coordinates pertain to sunk ships
+      // If so, prevent adding to pruned array
+      for(let j = 0; j < coordsToPrune.length; j++) {
+        if(successfulCoordinates[i].x === coordsToPrune[j].x &&
+          successfulCoordinates[i].y === coordsToPrune[j].y) {
+          canAdd = false;
+        }
+      }
+
+      // Check if already added to pruned array
+      // If so, prevent duplication 
+      for(let k = 0; k < prunedSuccessfulCoords.length; k++) {
+        if(prunedSuccessfulCoords[k].x === successfulCoordinates[i].x &&
+           prunedSuccessfulCoords[k].y === successfulCoordinates[i].y) {
+          canAdd = false;
+        }
+      }
+
+      // If the above tests pass, add to the pruned array
+      if(canAdd) {
+        prunedSuccessfulCoords.push(successfulCoordinates[i]);
+      }
+    }
+
+    return prunedSuccessfulCoords;
+  }
+
   const attackGameboard = (gameboardToAttack) => {
     let coords = {};
     if(successfulCoordinates.length > 0) {
@@ -146,6 +180,7 @@ const ComputerPlayer = (name, boardSize) => {
     } else {
       coords = makeRandomAttack(gameboardToAttack);
     }
+    successfulCoordinates = getPrunedSuccessfulCoords(gameboardToAttack);
     return coords;
   }
 
