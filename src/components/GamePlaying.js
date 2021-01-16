@@ -34,7 +34,7 @@ function GamePlaying(props) {
         }
 
         if(props.playerOne.getGameboard().allShipsSunk()) {
-          addTextToLog(`We lost the battle! Commander ${props.playerTwo.getName()} has blown our ships to pieces. Unlucky.`, 'game-log-loss', true);
+          addTextToLog(`We lost the battle! Commander ${props.playerTwo.getName()} has blown our ships to pieces. Let's give it another go?`, 'game-log-loss', true);
           setIsEnabled(true);
           setIsEnabled(false);
         } else {
