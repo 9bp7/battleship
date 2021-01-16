@@ -1,4 +1,4 @@
 - Add 2-player mode
 - Add ability to restart after game has finished
 - Improve game log, shouldn't show every existent node in the DOM
-- Add visual display of out of bounds on boat placing screen
+- Add visual display of out of bounds on boat placing screen DONE
