@@ -86,8 +86,6 @@ const ComputerPlayer = (name, boardSize) => {
         if(gameboardToAttack.canReceiveAttack(randomX, randomY)) {
           gameboardToAttack.receiveAttack(randomX, randomY);
           if(gameboardToAttack.getTile(randomX, randomY).isOccupied()) {
-            lastSuccessfulX = randomX;
-            lastSuccessfulY = randomY;
             successfulCoordinates.push({x: randomX, y: randomY});
           }
           coordsAreInvalid = false;
@@ -115,23 +113,21 @@ const ComputerPlayer = (name, boardSize) => {
         {x: successfulCoordinates[j].x,     y: successfulCoordinates[j].y - 1},
       ]);
 
-      for(let i = 0; i < coordsToTry.length; i++) {
+      for(let i = 0; i < (coordsToTry.length / 2); i++) {
         if(gameboardToAttack.canReceiveAttack(coordsToTry[i].x, coordsToTry[i].y)) {
           gameboardToAttack.receiveAttack(coordsToTry[i].x, coordsToTry[i].y);
           if(gameboardToAttack.getTile(coordsToTry[i].x, coordsToTry[i].y).isOccupied()) {
-            lastSuccessfulX = coordsToTry[i].x;
-            lastSuccessfulY = coordsToTry[i].y;
             successfulCoordinates.push({x: coordsToTry[i].x, y: coordsToTry[i].y});
           }
   
           return {
-            x: lastSuccessfulX,
-            y: lastSuccessfulY
+            x: coordsToTry[i].x,
+            y: coordsToTry[i].y
           };
         }
       }
     }
-    
+
     return makeRandomAttack(gameboardToAttack);
   }
 

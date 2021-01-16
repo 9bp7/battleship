@@ -1,22 +1,36 @@
 .gameboard {
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
   background: rgb(66, 81, 124);
-  border: 2px solid #000;
   margin: 0 auto 20px auto;
   display: grid;
   grid-template-columns: repeat(10, 10%);
   opacity: 0.95;
   position: relative;
+  background-image: linear-gradient(to top, rgba(66, 81, 124, .9), rgba(66, 81, 124, .9)),
+                    url('../assets/sea-board.jpg');
+  background-size: cover;
+  box-shadow: 0px 0px 20px -1px #00000063;
+}
+
+.gameboard::before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  border: 2px solid #000;
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  z-index: -1;
 }
 
 .gameboard-tile,
 .gameboard-tile-occupied {
   position: relative;
+  user-select: none;
 }
 
 .gameboard-tile {
-  width: 30px;
   background-color: transparent;
   border: 2px solid #000;
 }
@@ -62,6 +76,11 @@
   width: 100%;
 }
 
+.gameboard-placing-controls p,
+.gameboard-placing-controls button {
+  margin-bottom: 20px;
+}
+
 .hit,
 .miss {
   width: 80%;
@@ -86,13 +105,12 @@
 }
 
 .game-log {
-  height: 300px;
+  height: 400px;
   overflow-y: hidden;
 }
 
 .game-log p {
   font-size: 1.4rem;
-  transition: 2s;
 }
 
 .game-log p:nth-of-type(2) {
@@ -108,7 +126,19 @@
 }
 
 .game-log p:nth-of-type(5) {
-  opacity: 0.4;
+  opacity: 0.3;
+}
+
+.game-log p:nth-of-type(6) {
+  opacity: 0.2;
+}
+
+.game-log p.highlight {
+  color: rgb(0, 252, 217);
+}
+
+.game-log p.warning {
+  color: rgb(150, 0, 0);
 }
 
 .game-log h3.game-log-win {
@@ -117,6 +147,7 @@
   animation: gameWin 2s;
   animation-iteration-count: infinite;
   animation-direction: alternate-reverse;
+  animation-timing-function: ease-in-out;
 }
 
 @keyframes gameWin {
@@ -132,24 +163,45 @@
 .game-log h3.game-log-loss {
   color: rgb(192, 31, 31);
   text-decoration: none;
-  animation: gameLoss 2s;
+  animation: gameLoss 10s;
   animation-iteration-count: infinite;
   animation-direction: alternate-reverse;
+  animation-timing-function: ease-in-out;
 }
 
 @keyframes gameLoss {
-  0%, 75% {
-    color: rgb(189, 15, 15); 
+  0% {
+    color: rgb(139, 83, 57);
   }
-
+  
   100% {
-    color: rgb(133, 10, 10); 
+    color: rgb(139, 57, 57);
   }
 }
 
-.game-log h3 {
+.game-log h3.game-log-win,
+.game-log h3.game-log-loss {
+  margin-bottom: 400px;
+  font-size: 1.8rem;
+}
+
+.game-log h3:first-of-type {
   margin-bottom: 20px;
   font-size: 2.0rem;
   text-decoration: underline;
   text-transform: uppercase;
+}
+
+
+
+
+@media only screen and (max-height: 650px) {
+  .gameboard {
+    width: 300px;
+    height: 300px;
+  }
+
+  .game-log {
+    height: 300px;
+  }
 }

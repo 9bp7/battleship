@@ -5,11 +5,38 @@ function BoatPlacing(props) {
   let [boatsToPlace, setBoatsToPlace] = useState();
   let [currentBoat, setCurrentBoat] = useState(0);
   let [axis, setAxis] = useState('y');
+  let [eventListener, setEventListener] = useState(false);
+  let spaceEventListener;
 
   useEffect(() => {
     let boats = props.boats;
     setBoatsToPlace([...boats]);
+
+    return(() => {
+      window.removeEventListener("keyup", handleSpaceKey);
+      setEventListener(false);
+    })
   }, []);
+
+  function handleSpaceKey(e) {
+    if(e.keyCode === 32) {
+      if(axis === 'x') {
+        setAxis('y');
+      } else if(axis === 'y') {
+        setAxis('x');
+      }
+      console.log('Space key up. Axis ' + axis);
+      window.removeEventListener('keyup', handleSpaceKey);
+      setEventListener(false);
+    }  
+  }
+
+  useEffect(() => {
+    if(eventListener === false) {
+      setEventListener(true);
+      window.addEventListener('keyup', handleSpaceKey);
+    }
+  }, [eventListener]);
 
   function placeShip(x, y) {
     if(currentBoat < boatsToPlace.length) {

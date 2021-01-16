@@ -1,5 +1,7 @@
 * {
   box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 }
 
 html {
@@ -13,6 +15,7 @@ body {
 
   background-image: url('./assets/sea.jpg');
   background-size: cover;
+  background-repeat: no-repeat;
 
   color: rgb(29, 29, 29);
 }

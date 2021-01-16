@@ -27,7 +27,7 @@ function BoardPlayer(props) {
     }    
   }
 
-  function redrawBoard(dx = 0, dy = 0) {
+  function redrawBoard(dx, dy) {
     let filledBoard = [];
     for(let y = 0; y < props.gameboard.getBoardSize(); y++) {
       filledBoard[y] = [];
@@ -41,7 +41,7 @@ function BoardPlayer(props) {
           tileIsHit = true;
         }
         let tileIsHovering = null;
-        if(dx === x && dy === y && props.isEnabled) {
+        if(dx === x && dy === y) {
           if(props.gameboard.canReceiveAttack(x, y)) {
             tileIsHovering = true;
           } else {
@@ -49,7 +49,7 @@ function BoardPlayer(props) {
           }
         }
         filledBoard[y][x] = <BoardTile  onMouseOver={() => redrawBoard(x, y)}
-                                        onClick={() => processAttack(x, y)}
+                                        onClick={() => props.isEnabled ? processAttack(x, y) : null}
                                         x={x} 
                                         y={y}
                                         isOccupied={tileIsOccupied}

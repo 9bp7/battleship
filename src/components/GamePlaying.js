@@ -5,7 +5,7 @@ import BoardEnemy from './BoardEnemy';
 function GamePlaying(props) {
   let [playerAttacking, setPlayerAttacking] = useState(1);
   let [isEnabled, setIsEnabled] = useState(true);
-  let [text, setText] = useState([<p>{`Right, let's show these b*stards what we're made of. Good luck, and don't let us down, Commander ${props.playerOne.getName()}!`}</p>])
+  let [text, setText] = useState([<p>{`Righty ho Commander ${props.playerOne.getName()}, it's time to show these muppets what we're made of. Good luck, and don't let us down!`}</p>])
 
   function addTextToLog(textToAdd, classes='', bigText = false) {
     let newTextLog = text;
@@ -24,13 +24,17 @@ function GamePlaying(props) {
         let attackedCoords = props.playerTwo.attackGameboard(props.playerOne.getGameboard());
         if(props.playerOne.getGameboard().getTile(attackedCoords.x, attackedCoords.y).isOccupied()) {
           let ship = props.playerOne.getGameboard().getTile(attackedCoords.x, attackedCoords.y).getOccupyingShip();
-          addTextToLog(`Sh*t, the enemy hit our ${ship.getName()}!`);
+          if(ship.isSunk()) {
+            addTextToLog(`Bugger, the enemy sunk our ${ship.getName()}!`, 'warning');
+          } else {
+            addTextToLog(`Ouch, the enemy hit our ${ship.getName()}!`);
+          }          
         } else {
-          addTextToLog(`Ha! The enemy missed their shot. Pathetic!`);
+          addTextToLog(`Our pitiful enemy missed their shot! Ha!`);
         }
 
         if(props.playerOne.getGameboard().allShipsSunk()) {
-          addTextToLog(`We lost the battle! The enemy has eliminated all of our ships! Noooooo`, 'game-log-loss', true);
+          addTextToLog(`We lost the battle! Commander ${props.playerTwo.getName()} has blown our ships to pieces. Unlucky.`, 'game-log-loss', true);
           setIsEnabled(true);
           setIsEnabled(false);
         } else {
@@ -45,12 +49,16 @@ function GamePlaying(props) {
   function enemyReceivesAttack(x, y) {
     if(props.playerTwo.getGameboard().getTile(x, y).isOccupied()) {
       let ship = props.playerTwo.getGameboard().getTile(x, y).getOccupyingShip();
-      addTextToLog(`Great shot! We hit their ${ship.getName()}!`);
+      if(ship.isSunk()) {
+        addTextToLog(`Excellent work! We sunk their ${ship.getName()}!`, 'highlight');
+      } else {
+        addTextToLog(`Great shot! We hit their ${ship.getName()}!`);
+      }        
     } else {
       addTextToLog(`We missed that shot, let's aim better next time.`);
     }
     if(props.playerTwo.getGameboard().allShipsSunk()) {
-      addTextToLog(`WE WON THE BATTLE! The enemy is defeated. Well done, Commander ${props.playerOne.getName()}!`, 'game-log-win', true);
+      addTextToLog(`WE WON THE BATTLE! We've sunk all of ${props.playerTwo.getName()}'s poxy ships! You made it look easy... Jolly good job, Commander ${props.playerOne.getName()}!`, 'game-log-win', true);
       setIsEnabled(true);
       setIsEnabled(false);
     } else {
@@ -73,7 +81,7 @@ function GamePlaying(props) {
         <BoardEnemy gameboard={props.playerTwo.getGameboard()}
                     isEnabled={isEnabled}
                     receiveAttack={enemyReceivesAttack}/>
-        <p className="white">Commander Puter</p>
+        <p className="white">Commander {props.playerTwo.getName()}</p>
       </div>
     </>
   )

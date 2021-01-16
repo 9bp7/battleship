@@ -17,7 +17,7 @@ function GameVsAIDisplay(props) {
 
   switch(currentScreen) {
     case 0:
-      toDisplay = <BoatPlacing text={"Right, you're in charge Commander " + props.playerOne.getName() + "! First up, where do you want our boats?"}
+      toDisplay = <BoatPlacing text={"You're in charge, Commander " + props.playerOne.getName() + "! Where shall we position our ships?"}
                                gameboard={props.playerOne.getGameboard()}
                                setScreen={() => setCurrentScreen(1)}
                                boats={boats}/>

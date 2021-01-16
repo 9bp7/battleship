@@ -39,13 +39,13 @@ function App() {
       break;
 
     case 2:
-      toDisplay = <SplashText textToShow="Commander Puter is a tough nut to crack, but I think we got this."
-                              btn1Text="Let's do it!"
+      toDisplay = <SplashText textToShow="Roger that, let's blow Commander Puter's fleet to smithereens!"
+                              btn1Text="We'll teach him a bloody good lesson!"
                               btn1Func={() => setScreen(3)} />
       break;
 
     case 3:
-      toDisplay = <SplashInput textToShow="Okay, so what shall we call you, Commander?"
+      toDisplay = <SplashInput textToShow="That we will, sir. But before we sail off, remind me of your name..."
                                inputPlaceholder="Your name, sir"
                                submitText="Battle"
                                submitFunc={(inputValue) => {
@@ -57,7 +57,7 @@ function App() {
     case 4:
       toDisplay = <GameDisplay opponent="ai"
                                p1Name={playerOneName} 
-                               p2Name="Commander Puter" />
+                               p2Name="Puter" />
       break;
   }
 
