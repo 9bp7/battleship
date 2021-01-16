@@ -79,7 +79,7 @@ function GameLoopVsAI(props) {
       } else if(consecutiveMisses === 6) { // 7 times
         addTextToLog(`7 misses in a row, Commander ${props.playerOne.getName()}? Quite frankly I expected better of you!`);
       } else if(consecutiveMisses === 9) { // 10 times
-        addTextToLog(`That's your tenth miss in a row. I honestly have no words at this point.`);
+        addTextToLog(`Out of the 100 tiles on this board, you've somehow just missed a tenth of them in a row with no hits landed in between. It's both parts embarrassing, and impressive.`);
       }       
       setConsecutiveMisses(consecutiveMisses + 1); 
     }
