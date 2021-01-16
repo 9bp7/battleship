@@ -6,7 +6,6 @@ function BoardPlayer(props) {
   let [board, setBoard] = useState([]);
   let [placed, setPlaced] = useState([]);
 
-  // Draw board on component mount
   useEffect(() => {
     redrawBoard();
   }, [])

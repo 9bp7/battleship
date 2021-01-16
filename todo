@@ -1,4 +1,15 @@
 - Add 2-player mode
 - Add ability to restart after game has finished
 - Improve game log, shouldn't show every existent node in the DOM
-- Add visual display of out of bounds on boat placing screen DONE
+X Add visual display of out of bounds on boat placing screen
+- Tidy up code 
+- Move Tile factory into its own file
+- Improve computer attack logic
+
+Improving computer attack logic
+Current Downfalls
+- Takes too long trying the surrounding coordinates after getting a successful hit
+- To fix: In coordsToTry, store the relative direction of the potential coordinate, e.g. up/down/left/right
+          If the direction was successful, store it in a variable to use next time
+          If that direction is tried, without success, set the last successful direction to null
+          Create a new array that shuffles but always puts the desired item (if not null), i.e. the one that matches the last successful direction, to the top so that it is tried first

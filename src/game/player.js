@@ -26,10 +26,8 @@ const HumanPlayer = (name, boardSize) => {
 
 const ComputerPlayer = (name, boardSize) => {
   const prototype = Player(name, boardSize);
-  let lastSuccessfulX = null;
-  let lastSuccessfulY = null;
-
   let successfulCoordinates = [];
+  let lastSuccessfulDirection = null;
 
   const getRandomArbitrary = (min, max) => {
     return Math.random() * (max - min) + min;
@@ -57,14 +55,10 @@ const ComputerPlayer = (name, boardSize) => {
   function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
   
-    // While there remain elements to shuffle...
     while (0 !== currentIndex) {
-  
-      // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
   
-      // And swap it with the current element.
       temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;
@@ -73,9 +67,18 @@ const ComputerPlayer = (name, boardSize) => {
     return array;
   }
 
-  const makeRandomAttack = (gameboardToAttack) => {
-    console.log('Attempting random attack...');
+  const shuffleThenPrioritiseDirection = (coordsToShuffle, directionToPrioritise) => {
+    let prioritisedCoords = shuffle(coordsToShuffle);
+    if(directionToPrioritise !== null) {
+      let coordsToPrioritise = prioritisedCoords.filter(coords => coords.direction === directionToPrioritise);
+      prioritisedCoords = prioritisedCoords.filter(coords => coords.direction !== directionToPrioritise);
+      prioritisedCoords.unshift(coordsToPrioritise[0]);
+      console.log(prioritisedCoords);
+    }    
+    return prioritisedCoords;
+  }
 
+  const makeRandomAttack = (gameboardToAttack) => {
     let coordsAreInvalid = true;
     let randomX = 0;
     let randomY = 0;
@@ -103,21 +106,25 @@ const ComputerPlayer = (name, boardSize) => {
   }
 
   const makeCalculatedAttack = (gameboardToAttack) => {
-    console.log('Attempting calculated attack...');
-
     for(let j = 0; j < successfulCoordinates.length; j++) {
-      let coordsToTry = shuffle([
-        {x: successfulCoordinates[j].x + 1, y: successfulCoordinates[j].y    },
-        {x: successfulCoordinates[j].x - 1, y: successfulCoordinates[j].y    },
-        {x: successfulCoordinates[j].x,     y: successfulCoordinates[j].y + 1},
-        {x: successfulCoordinates[j].x,     y: successfulCoordinates[j].y - 1},
-      ]);
+      let coordsToTry = shuffleThenPrioritiseDirection([
+        {x: successfulCoordinates[j].x + 1, y: successfulCoordinates[j].y,      direction: 'right'},
+        {x: successfulCoordinates[j].x - 1, y: successfulCoordinates[j].y,      direction: 'left'},
+        {x: successfulCoordinates[j].x,     y: successfulCoordinates[j].y + 1,  direction: 'down'},
+        {x: successfulCoordinates[j].x,     y: successfulCoordinates[j].y - 1,  direction: 'up'},
+      ], lastSuccessfulDirection);
 
+      // Try two of the values in coordsToTry
+      // By trying half of the total values, we allow the computer to still make random attacks
+      // This should give the computer more chance of winning
       for(let i = 0; i < (coordsToTry.length / 2); i++) {
         if(gameboardToAttack.canReceiveAttack(coordsToTry[i].x, coordsToTry[i].y)) {
           gameboardToAttack.receiveAttack(coordsToTry[i].x, coordsToTry[i].y);
           if(gameboardToAttack.getTile(coordsToTry[i].x, coordsToTry[i].y).isOccupied()) {
             successfulCoordinates.push({x: coordsToTry[i].x, y: coordsToTry[i].y});
+            lastSuccessfulDirection = coordsToTry[i].direction;
+          } else {
+            lastSuccessfulDirection = null;
           }
   
           return {
@@ -128,6 +135,7 @@ const ComputerPlayer = (name, boardSize) => {
       }
     }
 
+    // If unable to make a calculated attack, make a random attack and return the results
     return makeRandomAttack(gameboardToAttack);
   }
 
