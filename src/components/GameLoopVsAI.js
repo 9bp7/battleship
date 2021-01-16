@@ -32,7 +32,7 @@ function GameLoopVsAI(props) {
           if(ship.isSunk()) {
             addTextToLog(`Bugger, the enemy sunk our ${ship.getName()}!`, 'warning');
           } else {
-            let choice = getRandomNumber(0, 60);
+            let choice = getRandomNumber(0, 50);
             (choice > 0 && choice < 24) ? addTextToLog(`Ouch, the enemy hit our ${ship.getName()}!`) : addTextToLog(`Oof, they've landed a shot on our ${ship.getName()}!`);
           }          
           setEnemyConsecutiveMisses(0);
@@ -68,7 +68,8 @@ function GameLoopVsAI(props) {
       if(ship.isSunk()) {
         addTextToLog(`Excellent work! We sunk their ${ship.getName()}!`, 'highlight');
       } else {
-        addTextToLog(`Great shot! We hit their ${ship.getName()}!`);
+        let choice = getRandomNumber(0, 50);
+        (choice > 0 && choice < 24) ? addTextToLog(`Great shot! We hit their ${ship.getName()}!`) : addTextToLog(`Solid work! We landed a shot on their ${ship.getName()}!`);
       }        
       setConsecutiveMisses(0);
     } else {
@@ -79,7 +80,9 @@ function GameLoopVsAI(props) {
       } else if(consecutiveMisses === 6) { // 7 times
         addTextToLog(`7 misses in a row, Commander ${props.playerOne.getName()}? Quite frankly I expected better of you!`);
       } else if(consecutiveMisses === 9) { // 10 times
-        addTextToLog(`Out of the 100 tiles on this board, you've somehow just missed a tenth of them in a row with no hits landed in between. It's both parts embarrassing, and impressive.`);
+        addTextToLog(`Out of the 100 tiles on this board, you've somehow just missed a tenth of them in a row with no hits landed in between. I honestly have no words.`);
+      } else if(consecutiveMisses === 14) { // 15 times
+        addTextToLog(`15 consecutive shots. 15 consecutive misses. Dare I ask... Are you even trying to win, Commander ${props.playerOne.getName()}?!`);
       }       
       setConsecutiveMisses(consecutiveMisses + 1); 
     }
