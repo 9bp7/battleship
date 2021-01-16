@@ -52,11 +52,32 @@ function BoardPlacingShips(props) {
     // Set flags depending on whether the position is legal or not
     let startPos = (props.placingShipAxis === 'x' ? x : y);
     for(let i = startPos; i < (startPos + props.placingShipLength); i++) {
-      if((startPos + props.placingShipLength) <= props.gameboard.getBoardSize()) {
+      if(/*(startPos + props.placingShipLength) <=*/ startPos <= props.gameboard.getBoardSize()) {
         let isTilePositionValid = ( props.gameboard.positionIsLegal(x, y, props.placingShipAxis, props.placingShipLength)
                                     ? true
                                     : false);
+        let xx = 0, yy = 0;
         if(props.placingShipAxis === 'x') {
+          xx = i;
+          yy = y;
+        } else if(props.placingShipAxis === 'y') {
+          xx = x;
+          yy = i;
+        }
+
+        if(xx < props.gameboard.getBoardSize() && yy < props.gameboard.getBoardSize()) {
+          filledBoard[yy][xx] = <BoardTile  onClick={() => placeShip(xx, yy)} 
+                                            onMouseOver={() => redrawBoard(xx, yy)} 
+                                            x={xx} 
+                                            y={yy} 
+                                            isOccupied={props.gameboard.getTile(xx, yy).isOccupied()} 
+                                            isHoveringValid={isTilePositionValid}
+                                            state={"placing"} />
+        }
+        
+
+
+        /*if(props.placingShipAxis === 'x') {
           filledBoard[y][i] = <BoardTile  onClick={() => placeShip(i, y)} 
                                           onMouseOver={() => redrawBoard(i, y)} 
                                           x={i} 
@@ -72,7 +93,7 @@ function BoardPlacingShips(props) {
                                           isOccupied={props.gameboard.getTile(x, i).isOccupied()} 
                                           isHoveringValid={isTilePositionValid}
                                           state={"placing"} />
-        }
+        }*/
       }
     }
     
