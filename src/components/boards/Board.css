@@ -251,7 +251,7 @@ button.play-again {
   width: 100%;
   margin: 15px 0 0 0;
   animation-name: flashBorder, fadeIn;
-  animation-delay: 5s, 2s;
+  animation-delay: 5s, 1s;
   animation-duration: .5s, .5s;
   animation-iteration-count: infinite, 1;
   animation-direction: alternate-reverse, normal;
