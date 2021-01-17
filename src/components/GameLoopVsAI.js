@@ -115,7 +115,7 @@ function GameLoopVsAI(props) {
           {text !== undefined ? text.map(text => text) : null}
         </div>
         
-        {gameFinished ? <button className="play-again">Play again</button> : null}
+        {gameFinished ? <button onClick={() => props.globalSetScreen(0)} className="play-again">Play again</button> : null}
       </div>
       <div className="forty">
         <BoardEnemy gameboard={props.playerTwo.getGameboard()}

@@ -19,7 +19,8 @@ function GameDisplayVsAI(props) {
       break;
     case 1: 
       toDisplay = <GameLoopVsAI playerOne={props.playerOne}
-                                playerTwo={props.playerTwo} />
+                                playerTwo={props.playerTwo}
+                                globalSetScreen={props.globalSetScreen} />
     default:
       break;
   }

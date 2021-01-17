@@ -57,7 +57,9 @@ function App() {
     case 4:
       toDisplay = <GameDisplayRouter opponent="ai"
                                      p1Name={playerOneName} 
-                                     p2Name="Puter" />
+                                     p2Name="Puter" 
+                                     globalSetScreen={setScreen}
+                                     />
       break;
   }
 
