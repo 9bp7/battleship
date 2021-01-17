@@ -3,7 +3,7 @@
 X Improve game log, shouldn't show every existent node in the DOM
 X Add visual display of out of bounds on boat placing screen
 - Remove old code/console logs
-- Move Tile factory into its own file
+X Move Tile factory into its own file
 X Improve computer attack logic
 X Ensure that display looks good on a smaller screen
 X Improve win/loss screens, use Battleship font for a heading

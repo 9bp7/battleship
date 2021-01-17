@@ -247,14 +247,37 @@
 }
 
 button.play-again {
-  position: absolute;
-  left: 0;
-  top: 100%;
+  opacity: 0;
   width: 100%;
-  margin: 0;
+  margin: 15px 0 0 0;
+  animation-name: flashBorder, fadeIn;
+  animation-delay: 5s, 2s;
+  animation-duration: .5s, .5s;
+  animation-iteration-count: infinite, 1;
+  animation-direction: alternate-reverse, normal;
+  animation-fill-mode: forwards, forwards;
 }
 
+@keyframes flashBorder {
+  0% {
+    border: 2px solid #000;
+  }
 
+  100% {
+    border: 2px solid rgb(46, 47, 48);
+    transform: scale(0.98);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 100;
+  }
+}
 
 
 @media only screen and (max-height: 650px) {

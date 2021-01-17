@@ -109,9 +109,12 @@ function GameLoopVsAI(props) {
                      isEnabled={isEnabled}/>
         <p className="white">Commander {props.playerOne.getName()}</p>
       </div>
-      <div className="twenty game-log">
-        <h3>Communications</h3>
-        {text !== undefined ? text.map(text => text) : null}
+      <div className="twenty">
+        <div className="game-log">
+          <h3>Communications</h3>
+          {text !== undefined ? text.map(text => text) : null}
+        </div>
+        
         {gameFinished ? <button className="play-again">Play again</button> : null}
       </div>
       <div className="forty">
