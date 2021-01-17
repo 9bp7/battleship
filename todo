@@ -23,4 +23,3 @@ X To fix: Get the coordinate of ships that have been sunk, and remove them from 
 - To fix: Figure out the axis of ships and ensure that the directions tried are only in that axis
           May need to keep a name attribute with the successful coordinates so that they
           can be linked to particular ships
-
