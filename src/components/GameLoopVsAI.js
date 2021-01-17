@@ -18,6 +18,9 @@ function GameLoopVsAI(props) {
     } else {
       newTextLog.unshift(<p className={classes}>{textToAdd}</p>);
     }    
+    if(newTextLog.length > 10) {
+      newTextLog.pop();
+    }
     setText(newTextLog);
   }
 

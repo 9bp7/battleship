@@ -2,11 +2,11 @@
 - Add ability to restart after game has finished
 - Improve game log, shouldn't show every existent node in the DOM
 X Add visual display of out of bounds on boat placing screen
-- Tidy up code 
+- Remove old code/console logs
 - Move Tile factory into its own file
-- Improve computer attack logic
-- Ensure that display looks good on a smaller screen
-- Improve win/loss screens, use Battleship font for a heading
+X Improve computer attack logic
+X Ensure that display looks good on a smaller screen
+X Improve win/loss screens, use Battleship font for a heading
 
 Improving computer attack logic
 Current Downfalls
@@ -19,7 +19,7 @@ X To fix: In coordsToTry, store the relative direction of the potential coordina
 X Continues to shoot at surrounding tiles of ships that have already been destroyed
 X To fix: Get the coordinate of ships that have been sunk, and remove them from the successful coordinates list
 
-- Attempts to shoot the surrounding tiles even though following the direction has been successful
-- To fix: Figure out the axis of ships and ensure that the directions tried are only in that axis
+X Attempts to shoot the surrounding tiles even though following the direction has been successful
+X To fix: Figure out the axis of ships and ensure that the directions tried are only in that axis
           May need to keep a name attribute with the successful coordinates so that they
           can be linked to particular ships
