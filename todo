@@ -1,6 +1,6 @@
 - Add 2-player mode
 - Add ability to restart after game has finished
-- Improve game log, shouldn't show every existent node in the DOM
+X Improve game log, shouldn't show every existent node in the DOM
 X Add visual display of out of bounds on boat placing screen
 - Remove old code/console logs
 - Move Tile factory into its own file
