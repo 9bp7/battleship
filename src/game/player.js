@@ -67,6 +67,8 @@ const ComputerPlayer = (name, boardSize) => {
     return array;
   }
 
+  // Shuffle the successfulCoords array, then put the coords of the 
+  // desired direction to prioritise to the top so that it gets tried first
   const shuffleThenPrioritiseDirection = (coordsToShuffle, directionToPrioritise) => {
     let prioritisedCoords = shuffle(coordsToShuffle);
     if(directionToPrioritise !== null) {
@@ -138,7 +140,7 @@ const ComputerPlayer = (name, boardSize) => {
     return makeRandomAttack(gameboardToAttack);
   }
 
-  // Method deletes all coords pertaining to sunk ships from the successful coordinates list
+  // Method deletes all previously successful coords pertaining to sunk ships from the successful coordinates list
   const getPrunedSuccessfulCoords = (gameboardToAttack) => {
     let coordsToPrune = gameboardToAttack.getAllSunkShipCoords();
     let prunedSuccessfulCoords = [];
