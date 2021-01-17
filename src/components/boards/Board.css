@@ -142,48 +142,96 @@
   color: rgb(150, 0, 0);
 }
 
-.game-log h3.game-log-win {
-  color: rgb(0, 255, 0);
+.game-log h3.game-log-win-header {
+  color: rgb(19, 253, 117);
   text-decoration: none;
-  animation: gameWin 2s;
+  animation-name: gameWin;
+  animation-duration: 2s;
+  animation-delay: 3s;
   animation-iteration-count: infinite;
-  animation-direction: alternate-reverse;
   animation-timing-function: ease-in-out;
 }
 
 @keyframes gameWin {
   0%, 75% {
-    color: rgb(45, 253, 62); 
+    color: rgb(19, 253, 117);
   }
 
-  100% {
-    color: rgb(30, 226, 46);
+  75%, 80% {
+    color: rgb(40, 236, 122);
+  }
+
+  81%, 85% {
+    color: rgb(19, 253, 117);
+  }
+
+  86%, 90% {
+    color: rgb(40, 236, 122);
+  }
+
+  91%, 95% {
+    color: rgb(19, 253, 117);
+  }
+
+  96%, 100% {
+    color: rgb(40, 236, 122);
   }
 }
 
-.game-log h3.game-log-loss {
-  color: rgb(192, 31, 31);
+.game-log h3.game-log-loss-header {
+  color: rgb(194, 0, 0);
   text-decoration: none;
-  animation: gameLoss 10s;
+  animation-name: gameLoss;
+  animation-duration: 2s;
+  animation-delay: 3s;
   animation-iteration-count: infinite;
-  animation-direction: alternate-reverse;
   animation-timing-function: ease-in-out;
 }
 
 @keyframes gameLoss {
-  0% {
-    color: rgb(139, 83, 57);
+  0%, 75% {
+    color: rgb(194, 0, 0);
   }
-  
-  100% {
-    color: rgb(139, 57, 57);
+
+  75%, 80% {
+    color: rgb(156, 0, 0);
+  }
+
+  81%, 85% {
+    color: rgb(194, 0, 0);
+  }
+
+  86%, 90% {
+    color: rgb(156, 0, 0);
+  }
+
+  91%, 95% {
+    color: rgb(194, 0, 0);
+  }
+
+  96%, 100% {
+    color: rgb(156, 0, 0);
   }
 }
 
-.game-log h3.game-log-win,
-.game-log h3.game-log-loss {
-  margin-bottom: 400px;
+.game-log h3.game-log-win-header,
+.game-log h3.game-log-loss-header {
+  margin-top: 30px;
+  margin-bottom: 15px;
   font-size: 1.8rem;
+  text-shadow: 1px 1px 5px #4a4d49;
+}
+
+.game-log p.game-log-win {
+  color: rgb(241, 255, 243);
+  margin-bottom: 400px;
+  text-shadow: 1px 1px 5px #4a4d49;
+}
+
+.game-log p.game-log-loss {
+  color: rgb(255, 241, 241);
+  margin-bottom: 400px;
+  text-shadow: 1px 1px 5px #4a4d49;
 }
 
 .game-log h3:first-of-type {
@@ -191,6 +239,11 @@
   font-size: 2.0rem;
   text-decoration: underline;
   text-transform: uppercase;
+}
+
+.game-log-win-header,
+.game-log-loss-header {
+  font-family: 'Black Ops One', serif;
 }
 
 button.play-again {
@@ -212,5 +265,11 @@ button.play-again {
 
   .game-log {
     height: 300px;
+  }
+
+  .game-log h3:first-of-type,
+  .game-log h3.game-log-win-header,
+  .game-log h3.game-log-loss-header {
+    font-size: 1.6rem;
   }
 }
