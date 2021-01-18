@@ -9,13 +9,17 @@ function App() {
   const [currentScreen, setCurrentScreen] = useState(0);
   const [playerOneName, setPlayerOneName] = useState('Badman');
   const [playerTwoName, setPlayerTwoName] = useState('Bigboy');
+  const [playerOnePreservedName, savePlayerOnePreservedName] = useState('');
+  const [playerTwoPreservedName, savePlayerTwoPreservedName] = useState('');
   let toDisplay = '';
 
   function setName(player, name) {
     if(player === 1 && name.length > 0) {
       setPlayerOneName(name);
+      savePlayerOnePreservedName(name);
     } else if(player === 2 && name.length > 0) {
       setPlayerTwoName(name);
+      savePlayerTwoPreservedName(name);
     }
   }
 
@@ -47,6 +51,7 @@ function App() {
     case 3:
       toDisplay = <SplashInput textToShow="That we will, sir. But before we sail off, remind me of your name..."
                                inputPlaceholder="Your name, sir"
+                               inputInitialValue={playerOnePreservedName}
                                submitText="Battle"
                                submitFunc={(inputValue) => {
                                  setScreen(4);

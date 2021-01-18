@@ -1,7 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 function SplashInput(props) {
   let [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    if(props.inputInitialValue && props.inputInitialValue.length > 0) {
+      setInputValue(props.inputInitialValue);
+    }
+  }, []);
 
   function handleChange(e) {
     setInputValue(e.target.value);
