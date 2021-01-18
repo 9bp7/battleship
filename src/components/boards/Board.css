@@ -253,6 +253,10 @@
   animation: 2s ease-in-out 0s infinite alternate-reverse forwards flashSlowly;
 }
 
+button.pass-device {
+  margin: 15px 0 0 0;
+}
+
 @keyframes flashSlowly {
   0% {
     color: rgb(66, 74, 110);
