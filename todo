@@ -7,7 +7,8 @@ X Move Tile factory into its own file
 X Improve computer attack logic
 X Ensure that display looks good on a smaller screen
 X Improve win/loss screens, use Battleship font for a heading
-- Remember previous player's name and use it to fill the set name field(s);
+- Remember previous player's name and use it to fill the set name field(s)
+- Merge branches
 
 Improving computer attack logic
 Current Downfalls
