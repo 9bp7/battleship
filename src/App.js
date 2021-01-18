@@ -70,14 +70,14 @@ function App() {
     
     // Route: Playing Human
     case 5:
-      toDisplay = <SplashText textToShow="Right, I want a clean fight... Joking, go blow each other's ships to smithereens."
+      toDisplay = <SplashText textToShow="Right, I want a clean fight... JK, go blow each other's ships to smithereens."
                               btn1Text="Let's 'ave it!"
                               btn1Func={() => setScreen(6)} />
       break;
 
     case 6:
       toDisplay = <SplashInput textToShow="Okay, who's up first and what shall we call you?"
-                               inputPlaceholder="P1's name, sir"
+                               inputPlaceholder="Player 1's Name"
                                inputInitialValue={playerOnePreservedName}
                                submitText="Battle"
                                submitFunc={(e, inputValue) => {
@@ -88,8 +88,8 @@ function App() {
       break;
 
     case 7:
-      toDisplay = <SplashInput textToShow="And for the second Commander, remind me of your name?"
-                                inputPlaceholder="P2's name, sir"
+      toDisplay = <SplashInput textToShow="And commander number two, what's your name?"
+                                inputPlaceholder="Player 2's Name"
                                 inputInitialValue={playerTwoPreservedName}
                                 submitText="Battle"
                                 submitFunc={(e, inputValue) => {
@@ -106,12 +106,16 @@ function App() {
                                       globalSetScreen={setScreen}
                                       />
       break;
+
+    default:
+      setCurrentScreen(0);
+      break;
   }
 
   return(
     <div className="App">
       <div className="wrap">
-        { currentScreen < 4 
+        { currentScreen < 4 || (currentScreen > 4 && currentScreen < 8) 
           ? <h1>Battleship</h1>
           : <h2>Battleship</h2> }
         {toDisplay}
