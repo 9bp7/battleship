@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/battleship/static/css/main.ffea5b4a.chunk.css",
+    "main.js": "/battleship/static/js/main.7d1fe09b.chunk.js",
+    "main.js.map": "/battleship/static/js/main.7d1fe09b.chunk.js.map",
+    "runtime-main.js": "/battleship/static/js/runtime-main.8540f0f8.js",
+    "runtime-main.js.map": "/battleship/static/js/runtime-main.8540f0f8.js.map",
+    "static/js/2.b89e5ab6.chunk.js": "/battleship/static/js/2.b89e5ab6.chunk.js",
+    "static/js/2.b89e5ab6.chunk.js.map": "/battleship/static/js/2.b89e5ab6.chunk.js.map",
+    "index.html": "/battleship/index.html",
+    "static/css/main.ffea5b4a.chunk.css.map": "/battleship/static/css/main.ffea5b4a.chunk.css.map",
+    "static/js/2.b89e5ab6.chunk.js.LICENSE.txt": "/battleship/static/js/2.b89e5ab6.chunk.js.LICENSE.txt",
+    "static/media/nuclear-explosion.12e07038.svg": "/battleship/static/media/nuclear-explosion.12e07038.svg",
+    "static/media/Board.css": "/battleship/static/media/sea-board.c6408315.jpg",
+    "static/media/index.css": "/battleship/static/media/sea.e691ca44.jpg",
+    "static/media/water-drop.9d5bb6f0.svg": "/battleship/static/media/water-drop.9d5bb6f0.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8540f0f8.js",
+    "static/js/2.b89e5ab6.chunk.js",
+    "static/css/main.ffea5b4a.chunk.css",
+    "static/js/main.7d1fe09b.chunk.js"
+  ]
+}
