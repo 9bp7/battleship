@@ -18,6 +18,9 @@ function GameLoopVsAI(props) {
     } else {
       newTextLog.unshift(<p className={classes}>{textToAdd}</p>);
     }    
+    if(newTextLog.length > 10) {
+      newTextLog.pop();
+    }
     setText(newTextLog);
   }
 
@@ -51,7 +54,9 @@ function GameLoopVsAI(props) {
 
         setIsEnabled(true);
         if(props.playerOne.getGameboard().allShipsSunk()) {
-          addTextToLog(`We lost the battle! Commander ${props.playerTwo.getName()} has blown our ships to pieces. Let's give it another go?`, 'game-log-loss', true);
+          addTextToLog(`We've lost the battle! Cmdr ${props.playerTwo.getName()} has blown all our ships to pieces. Fancy another go, Cmdr ${props.playerOne.getName()}?`, 'game-log-loss');
+          addTextToLog(`YOU LOST!`, 'game-log-loss-header', true);
+          
           setIsEnabled(false);
           setGameFinished(true);
         } else {
@@ -88,7 +93,8 @@ function GameLoopVsAI(props) {
     }
 
     if(props.playerTwo.getGameboard().allShipsSunk()) {
-      addTextToLog(`WE WON THE BATTLE! We've sunk all of poxy ${props.playerTwo.getName()}'s ships! You made it look easy... Jolly good job, Commander ${props.playerOne.getName()}!`, 'game-log-win', true);
+      addTextToLog(`The battle is won, we've sunk all of Cmdr ${props.playerTwo.getName()}'s ships! Jolly good job, Cmdr ${props.playerOne.getName()}!`, 'game-log-win');
+      addTextToLog(`YOU WON!`, 'game-log-win-header', true);
       setGameFinished(true);
       setIsEnabled(false);
     } else {
@@ -103,10 +109,13 @@ function GameLoopVsAI(props) {
                      isEnabled={isEnabled}/>
         <p className="white">Commander {props.playerOne.getName()}</p>
       </div>
-      <div className="twenty game-log">
-        <h3>Communications</h3>
-        {text !== undefined ? text.map(text => text) : null}
-        {gameFinished ? <button className="play-again">Play again</button> : null}
+      <div className="twenty">
+        <div className="game-log">
+          <h3>Communications</h3>
+          {text !== undefined ? text.map(text => text) : null}
+        </div>
+        
+        {gameFinished ? <button onClick={() => props.globalSetScreen(0)} className="play-again">Play again</button> : null}
       </div>
       <div className="forty">
         <BoardEnemy gameboard={props.playerTwo.getGameboard()}

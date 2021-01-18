@@ -17,7 +17,8 @@ function GameDisplayRouter(props) {
     gameModeToDisplay = <GameDisplayVsAI 
                          playerOne={playerOne} 
                          playerTwo={playerTwo}
-                         boats={boats} />
+                         boats={boats}
+                         globalSetScreen={props.globalSetScreen}/>
   } else {
     playerTwo = HumanPlayer(props.p2Name, 10);
     //gameModeToDisplay = <GameVsPlayerDisplay />

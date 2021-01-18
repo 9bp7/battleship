@@ -39,10 +39,8 @@ const ComputerPlayer = (name, boardSize) => {
       let axis = (getRandomArbitrary(0, 50) > 24 ? 'x' : 'y');
       let randomX = +(getRandomArbitrary(0, boardSize).toFixed(0));
       let randomY = +(getRandomArbitrary(0, boardSize).toFixed(0));
-      console.log(randomX +' '+ randomY+' '+axis);
       try {
         if(prototype.gameboard.positionIsLegal(randomX, randomY, axis, shipsToFillWith[i].length)) {
-          console.log('position is legal');
           prototype.gameboard.placeShip(randomX, randomY, axis, shipsToFillWith[i].length, shipsToFillWith[i].name);
           i++;
         }
@@ -68,10 +66,29 @@ const ComputerPlayer = (name, boardSize) => {
   }
 
   // Shuffle the successfulCoords array, then put the coords of the 
-  // desired direction to prioritise to the top so that it gets tried first
-  const shuffleThenPrioritiseDirection = (coordsToShuffle, directionToPrioritise) => {
+  // desired direction/axis to prioritise to the top so that it gets tried first
+  const shuffleThenPrioritiseDirection = (coordsToShuffle, directionToPrioritise, axisToPrioritise) => {
     let prioritisedCoords = shuffle(coordsToShuffle);
-    if(directionToPrioritise !== null) {
+    if(axisToPrioritise !== null) {
+      let directionsToPrioritise = [];
+      if(axisToPrioritise === 'x') {
+        directionsToPrioritise = ['left', 'right'];
+      } else if(axisToPrioritise === 'y') {
+        directionsToPrioritise = ['up', 'down'];
+      }
+
+      let highRank = [];
+      let lowRank = [];
+      for(let i = 0; i < prioritisedCoords.length; i++) {
+        if(directionsToPrioritise.includes(prioritisedCoords[i].direction)) {
+          highRank.push(prioritisedCoords[i]);
+        } else {
+          lowRank.push(prioritisedCoords[i]);
+        }
+      }
+
+      prioritisedCoords = [...highRank, ...lowRank];
+    } else if(directionToPrioritise !== null) {
       let coordsToPrioritise = prioritisedCoords.filter(coords => coords.direction === directionToPrioritise);
       prioritisedCoords = prioritisedCoords.filter(coords => coords.direction !== directionToPrioritise);
       prioritisedCoords.unshift(coordsToPrioritise[0]);
@@ -90,7 +107,8 @@ const ComputerPlayer = (name, boardSize) => {
         if(gameboardToAttack.canReceiveAttack(randomX, randomY)) {
           gameboardToAttack.receiveAttack(randomX, randomY);
           if(gameboardToAttack.getTile(randomX, randomY).isOccupied()) {
-            successfulCoordinates.unshift({x: randomX, y: randomY});
+            let shipName = gameboardToAttack.getTile(randomX, randomY).getOccupyingShip().getName();
+            successfulCoordinates.unshift({x: randomX, y: randomY, name: shipName});
           }
           coordsAreInvalid = false;
         }
@@ -106,6 +124,35 @@ const ComputerPlayer = (name, boardSize) => {
     }
   }
 
+  const detemineShipAxis = (coordToTry) => {
+    let coordsMatchingShipName = [];
+    for(let i = 0; i < successfulCoordinates.length; i++) {
+      if(successfulCoordinates[i].name === coordToTry.name) {
+        coordsMatchingShipName.push(successfulCoordinates[i]);
+      }
+    }
+
+    if(coordsMatchingShipName.length > 1) {
+      let xCoords = null;
+      let yCoords = null;
+      for(let i = 0; i < coordsMatchingShipName.length; i++) {
+        if(xCoords === null && yCoords === null) {
+          xCoords = coordsMatchingShipName[i].x;
+          yCoords = coordsMatchingShipName[i].y;
+        } else {
+          if(xCoords !== coordsMatchingShipName[i].x) {
+            return('x');
+          } else if(yCoords !== coordsMatchingShipName[i].y) {
+            return('y');
+          }
+        }
+      }
+    } else {
+      return null;
+    }
+    
+  }
+
   const makeCalculatedAttack = (gameboardToAttack) => {
     for(let j = 0; j < successfulCoordinates.length; j++) {
       let coordsToTry = shuffleThenPrioritiseDirection([
@@ -113,7 +160,7 @@ const ComputerPlayer = (name, boardSize) => {
         {x: successfulCoordinates[j].x - 1, y: successfulCoordinates[j].y,      direction: 'left'},
         {x: successfulCoordinates[j].x,     y: successfulCoordinates[j].y + 1,  direction: 'down'},
         {x: successfulCoordinates[j].x,     y: successfulCoordinates[j].y - 1,  direction: 'up'},
-      ], lastSuccessfulDirection);
+      ], lastSuccessfulDirection, detemineShipAxis(successfulCoordinates[j]));
 
       // Try two of the values in coordsToTry
       // By trying half of the total values, we allow the computer to still make random attacks
@@ -122,7 +169,8 @@ const ComputerPlayer = (name, boardSize) => {
         if(gameboardToAttack.canReceiveAttack(coordsToTry[i].x, coordsToTry[i].y)) {
           gameboardToAttack.receiveAttack(coordsToTry[i].x, coordsToTry[i].y);
           if(gameboardToAttack.getTile(coordsToTry[i].x, coordsToTry[i].y).isOccupied()) {
-            successfulCoordinates.unshift({x: coordsToTry[i].x, y: coordsToTry[i].y});
+            let shipName = gameboardToAttack.getTile(coordsToTry[i].x, coordsToTry[i].y).getOccupyingShip().getName();
+            successfulCoordinates.unshift({x: coordsToTry[i].x, y: coordsToTry[i].y, name: shipName});
             lastSuccessfulDirection = coordsToTry[i].direction;
           } else {
             lastSuccessfulDirection = null;
