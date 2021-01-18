@@ -50,7 +50,7 @@ function GameLoopVsHuman(props) {
     } else {
       let consecutiveMisses = (playerAttacking === 1 ? p1ConsecutiveMisses : p2ConsecutiveMisses);
       if(consecutiveMisses === 2) { // 3 times
-        addTextToLog(`Cmdr ${attackingPlayer.getName()} has missed the enemy three times in a row, get it together!`);
+        addTextToLog(`Cmdr ${attackingPlayer.getName()} has missed their enemy three times in a row, get it together!`);
       } else if(consecutiveMisses === 4) { // 5 times
         addTextToLog(`You're not having much luck, are you Cmdr ${attackingPlayer.getName()}? C'mon!`);
       } else if(consecutiveMisses === 6) { // 7 times
@@ -64,7 +64,7 @@ function GameLoopVsHuman(props) {
     }
 
     if(receivingPlayer.getGameboard().allShipsSunk()) {
-      addTextToLog(`The battle is won, Cmdr ${attackingPlayer.getName()} sunk all of Cmdr ${receivingPlayer.getName()}'s ships! Jolly good job, Cmdr ${attackingPlayer.getName()}!`, 'game-log-win');
+      addTextToLog(`The battle is won, Commander ${attackingPlayer.getName()} sunk all of Commander ${receivingPlayer.getName()}'s ships! Jolly good job, Commander ${attackingPlayer.getName()}!`, 'game-log-win');
       addTextToLog(`Cmdr ${attackingPlayer.getName()} WINS!`, 'game-log-win-header', true);
       setGameFinished(true);
       setIsEnabled(false);
@@ -74,6 +74,8 @@ function GameLoopVsHuman(props) {
     }
   }
 
+  // Show a screen in between turns that the player must dismiss
+  // Ensures that players do not see each other's boards
   if(passingDeviceScreen) {
     return(
       <div className="passing-device">
