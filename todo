@@ -1,4 +1,4 @@
-- Add 2-player mode
+X Add 2-player mode
 X Add ability to restart after game has finished
 X Improve game log, shouldn't show every existent node in the DOM
 X Add visual display of out of bounds on boat placing screen
@@ -10,7 +10,12 @@ X Improve win/loss screens, use Battleship font for a heading
 X Remember previous player's name and use it to fill the set name field(s)
 X Merge branches
 - Go through error/warning list and fix all
+
+Features that could be added if bored
 - Show number of remaining ships
+- Keep & generate stats/match report in gameboard.js, 
+    i.e. total shots (& hits), shot accuracy %, time taken
+
 
 Improving computer attack logic
 Current Downfalls
