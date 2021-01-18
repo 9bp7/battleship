@@ -38,10 +38,11 @@ function App() {
       toDisplay = <SplashText textToShow="Who will you be fighting today?"
                               btn1Text="Commander Puter (AI)"
                               btn1Func={() => setScreen(2)}
-                              btn2Text="Human"
-                              btn2Disabled />
+                              btn2Text="A Friend (2-Player)"
+                              btn2Func={() => setScreen(5)} />
       break;
 
+    // Route: Playing AI
     case 2:
       toDisplay = <SplashText textToShow="Roger that, let's blow Commander Puter's fleet to smithereens!"
                               btn1Text="We'll teach him a bloody good lesson!"
@@ -65,6 +66,45 @@ function App() {
                                      p2Name="Puter" 
                                      globalSetScreen={setScreen}
                                      />
+      break;
+    
+    // Route: Playing Human
+    case 5:
+      toDisplay = <SplashText textToShow="Right, I want a clean fight... Joking, go blow each other's ships to smithereens."
+                              btn1Text="Let's 'ave it!"
+                              btn1Func={() => setScreen(6)} />
+      break;
+
+    case 6:
+      toDisplay = <SplashInput textToShow="Okay, who's up first and what shall we call you?"
+                               inputPlaceholder="P1's name, sir"
+                               inputInitialValue={playerOnePreservedName}
+                               submitText="Battle"
+                               submitFunc={(e, inputValue) => {
+                                 e.preventDefault();
+                                 setScreen(7);
+                                 setName(1, inputValue);
+                               }} />
+      break;
+
+    case 7:
+      toDisplay = <SplashInput textToShow="And for the second Commander, remind me of your name?"
+                                inputPlaceholder="P2's name, sir"
+                                inputInitialValue={playerTwoPreservedName}
+                                submitText="Battle"
+                                submitFunc={(e, inputValue) => {
+                                  e.preventDefault();
+                                  setScreen(8);
+                                  setName(2, inputValue);
+                                }} />
+      break;
+    
+    case 8:
+      toDisplay = <GameDisplayRouter opponent="human"
+                                      p1Name={playerOneName} 
+                                      p2Name={playerTwoName} 
+                                      globalSetScreen={setScreen}
+                                      />
       break;
   }
 

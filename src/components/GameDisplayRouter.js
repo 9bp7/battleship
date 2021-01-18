@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {HumanPlayer, ComputerPlayer} from '../game/player';
 import GameDisplayVsAI from './GameDisplayVsAI';
+import GameDisplayVsHuman from './GameDisplayVsHuman';
 
 function GameDisplayRouter(props) {
   const boats = [{name: 'Carrier', length: 5},
@@ -21,7 +22,11 @@ function GameDisplayRouter(props) {
                          globalSetScreen={props.globalSetScreen}/>
   } else {
     playerTwo = HumanPlayer(props.p2Name, 10);
-    //gameModeToDisplay = <GameVsPlayerDisplay />
+    gameModeToDisplay = <GameDisplayVsHuman
+                          playerOne={playerOne} 
+                          playerTwo={playerTwo}
+                          boats={boats}
+                          globalSetScreen={props.globalSetScreen} />
   }
 
   return(

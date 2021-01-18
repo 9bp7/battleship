@@ -7,7 +7,15 @@ function SplashInput(props) {
     if(props.inputInitialValue && props.inputInitialValue.length > 0) {
       setInputValue(props.inputInitialValue);
     }
-  }, []);
+  }, [])
+
+  useEffect(() => {
+    if(props.inputInitialValue && props.inputInitialValue.length > 0) {
+      setInputValue(props.inputInitialValue);
+    } else {
+      setInputValue('');
+    }
+  }, [props.textToShow])
 
   function handleChange(e) {
     setInputValue(e.target.value);
@@ -17,7 +25,7 @@ function SplashInput(props) {
     <>
       <div>
         <p>{props.textToShow}</p>
-        <form onSubmit={() => props.submitFunc(inputValue)}>
+        <form onSubmit={e => props.submitFunc(e, inputValue)}>
           <input type="text" placeholder={props.inputPlaceholder} onChange={e => handleChange(e)} value={inputValue}/>
           <input type="submit" value={props.submitText} />
         </form>

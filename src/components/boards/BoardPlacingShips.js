@@ -13,7 +13,7 @@ function BoardPlacingShips(props) {
 
   useEffect(() => {
     redrawBoard();
-  }, [placed, props.placingShipAxis])
+  }, [placed, props.placingShipAxis, props.shipName])
 
   function placeShip(x, y) {
     if(props.gameboard.positionIsLegal(x, y, props.placingShipAxis, props.placingShipLength)) {

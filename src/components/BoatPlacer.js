@@ -6,7 +6,6 @@ function BoatPlacer(props) {
   let [currentBoat, setCurrentBoat] = useState(0);
   let [axis, setAxis] = useState('y');
   let [eventListener, setEventListener] = useState(false);
-  let spaceEventListener;
 
   useEffect(() => {
     let boats = props.boats;
@@ -36,6 +35,12 @@ function BoatPlacer(props) {
       window.addEventListener('keyup', handleSpaceKey);
     }
   }, [eventListener]);
+
+  // If text changes, assume there is another player who needs to place boats
+  // And reset the necessary variables
+  useEffect(() => {
+    setCurrentBoat(0);
+  }, [props.text])
 
   function placeShip(x, y) {
     if(currentBoat < boatsToPlace.length) {

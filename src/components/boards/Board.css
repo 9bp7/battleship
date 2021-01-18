@@ -246,6 +246,23 @@
   font-family: 'Black Ops One', serif;
 }
 
+.passing-device h3 {
+  font-size: 2.0rem;
+  color: rgb(0, 0, 0);
+  margin-bottom: 20px;
+  animation: 2s ease-in-out 0s infinite alternate-reverse forwards flashSlowly;
+}
+
+@keyframes flashSlowly {
+  0% {
+    color: rgb(66, 74, 110);
+  }
+  
+  100% {
+    color: rgb(0, 0, 0);
+  }
+}
+
 button.play-again {
   opacity: 0;
   width: 100%;
