@@ -54,7 +54,8 @@ function App() {
                                inputPlaceholder="Your name, sir"
                                inputInitialValue={playerOnePreservedName}
                                submitText="Battle"
-                               submitFunc={(inputValue) => {
+                               submitFunc={(e, inputValue) => {
+                                 e.preventDefault();
                                  setScreen(4);
                                  setName(1, inputValue);
                                }} />

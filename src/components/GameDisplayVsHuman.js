@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import BoatPlacer from './BoatPlacer';
 import GameLoopVsHuman from './GameLoopVsHuman';
 
@@ -23,7 +23,9 @@ function GameDisplayVsHuman(props) {
       toDisplay = <GameLoopVsHuman playerOne={props.playerOne}
                                 playerTwo={props.playerTwo}
                                 globalSetScreen={props.globalSetScreen} />
+      break;
     default:
+      setCurrentScreen(0);
       break;
   }
 

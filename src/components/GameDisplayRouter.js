@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {HumanPlayer, ComputerPlayer} from '../game/player';
 import GameDisplayVsAI from './GameDisplayVsAI';
 import GameDisplayVsHuman from './GameDisplayVsHuman';

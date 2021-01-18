@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import explosion from '../../assets/nuclear-explosion.svg';
 import miss from '../../assets/water-drop.svg';
 
@@ -27,8 +27,8 @@ function BoardTile(props) {
       <div className={classes} 
            onMouseOver={onMouseOver}
            onClick={onClick}> 
-        {props.isHit && props.isOccupied ? <img src={explosion} className="hit" /> : null}        
-        {props.isHit && !props.isOccupied ? <img src={miss} className="miss" /> : null}        
+        {props.isHit && props.isOccupied ? <img src={explosion} alt='H' className="hit" /> : null}        
+        {props.isHit && !props.isOccupied ? <img src={miss} alt='M' className="miss" /> : null}        
       </div>
     </>
   )
