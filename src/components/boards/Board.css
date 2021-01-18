@@ -255,6 +255,12 @@
 
 button.pass-device {
   margin: 15px 0 0 0;
+  animation-name: flashBorder;
+  animation-duration: .5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
 }
 
 @keyframes flashSlowly {
